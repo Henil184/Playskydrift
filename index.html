@@ -8,8 +8,8 @@
      crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-9059974437009768">
 
-  <title>Sky Drift</title>
-  
+  <title>Sky Drift – Play Free Online Jump Game | PlaySkyDrift.com</title>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,13 +30,20 @@
 }
 </script>
 
-
-  <title>Sky Drift – Play Free Online Jump Game | PlaySkyDrift.com</title>
 <meta name="description" content="Play Sky Drift — a fun free jump game! Jump between platforms, climb the night sky, and chase your best score. Play instantly on desktop or mobile.">
 <meta name="keywords" content="Sky Drift, play Sky Drift, jump game online, fun browser game, play free game, platform jumper, mobile game, playskydrift, sky drift jump game">
 <meta name="author" content="Henil Patel">
 <link rel="canonical" href="https://playskydrift.com/">
 <meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sky Drift — Play Free Online Jump Game">
+<meta property="og:description" content="Jump between platforms and climb the night sky. Free, no download, works on desktop and mobile.">
+<meta property="og:url" content="https://playskydrift.com/">
+<meta property="og:image" content="https://playskydrift.com/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sky Drift — Play Free Online Jump Game">
+<meta name="twitter:description" content="Fast, free browser jump game. Play instantly on any device.">
+<meta name="twitter:image" content="https://playskydrift.com/logo.png">
 
   <style>
     :root {
@@ -73,12 +80,13 @@
     }
     
     html, body {
-      height: 100%;
+      min-height: 100%;
       margin: 0;
       background: linear-gradient(160deg, var(--bg-1), var(--bg-2) 50%, var(--bg-3));
       font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--text);
-      overflow: hidden;
+      /* Allow content below the game to be readable and scrollable */
+      overflow-y: auto;
       position: relative;
     }
     /* Subtle animated gradient/particles overlay */
@@ -248,6 +256,16 @@
     .badge { font-size: 16px; font-weight: 800; }
     .corner-score { font-size: 26px; font-weight: 900; }
     /* Hide legacy HUD elements when new topbar is present */
+    /* Content area under the game */
+    main#content { max-width: 840px; margin: 32px auto 56px; padding: 0 16px; line-height: 1.6; }
+    main#content h1 { font-size: 32px; margin: 0 0 8px; }
+    main#content h2 { font-size: 22px; margin: 22px 0 8px; }
+    main#content p { opacity: 0.92; }
+    .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; box-shadow: 0 8px 22px var(--shadow); }
+    .meta-list { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 10px; }
+    .meta-list div { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+    .spacer { height: 16px; }
+    .ad-spacer { margin: 18px 0; display: block; }
     .hud, .game-title, .corner-score { display: none !important; }
 
     /* Modern Topbar */
@@ -400,7 +418,7 @@
 </head>
 <body>
   <div class="wrap">
-    <canvas id="game" width="420" height="630" aria-label="Jump Game"></canvas>
+    <canvas id="game" width="420" height="630" aria-label="Sky Drift browser jump game"></canvas>
   </div>
 
   <header class="topbar">
@@ -1094,18 +1112,109 @@
     })();
   </script>
   
-   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9059974437009768"
-     crossorigin="anonymous"></script>
-<!-- bottom_banner -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-9059974437009768"
-     data-ad-slot="4790877076"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+  <!-- Content below the game: high-quality guide and FAQ -->
+  <main id="content" role="main">
+    <h1>Sky Drift – Guide, Tips, and Troubleshooting</h1>
+    <p>
+      Sky Drift is a fast browser platformer. Jump between platforms, climb the night sky,
+      and chase a new personal best. This page includes controls, strategies, device tips,
+      and answers to common questions so you can play smoothly on desktop and mobile.
+    </p>
+
+    <div class="info-card">
+      <div class="meta-list">
+        <div><strong>Genre:</strong> Endless jumper</div>
+        <div><strong>Platform:</strong> Web (desktop + mobile)</div>
+        <div><strong>Best For:</strong> Quick sessions, high‑score chasing</div>
+        <div><strong>Tech:</strong> HTML5 Canvas, no downloads</div>
+      </div>
+    </div>
+
+    <h2>How to Play</h2>
+    <p>
+      Leap from platform to platform while avoiding hazards. Time your jumps so you always
+      have a safe landing and maintain upward momentum. Collect power‑ups for short boosts
+      and score multipliers.
+    </p>
+    <p><strong>Desktop:</strong> Left/Right or A/D to move, Space to jump, P to pause.</p>
+    <p><strong>Mobile:</strong> Tap the on‑screen left/right buttons to move and tap to jump.</p>
+
+    <!-- In‑article ad: appears after content and away from gameplay controls -->
+    <div class="ad-spacer">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-9059974437009768"
+           data-ad-slot="4790877076"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <h2>Tips & Strategies</h2>
+    <ul>
+      <li>Commit to early jumps to avoid sliding off edges.</li>
+      <li>Chain moving platforms to build vertical routes and skip hazards.</li>
+      <li>Save power‑ups for gaps you can’t clear or recovery moments.</li>
+      <li>On low‑end phones, close background apps to reduce input lag.</li>
+      <li>Fragile (pink) platforms break—land lightly and move off quickly.</li>
+    </ul>
+
+    <h2>Device & Performance</h2>
+    <p>
+      Works in modern Chrome, Edge, Firefox, and Safari. Keep your browser updated and
+      battery above 20% for best results. If the screen is black, enable WebGL and
+      hardware acceleration in browser settings.
+    </p>
+
+    <h2>FAQ</h2>
+    <p><strong>Is Sky Drift free?</strong> Yes, it’s 100% free to play in your browser.</p>
+    <p><strong>Does it work offline?</strong> Not yet. Add the game to your home screen for quick access.</p>
+    <p><strong>Controller support?</strong> Many USB/Bluetooth gamepads work on desktop via the Gamepad API.</p>
+    <p><strong>How do scores save?</strong> Your best score is stored locally in your browser.</p>
+
+    <p>Like this game? Try the classic build <a href="SkyDrift.html">SkyDrift.html</a> or visit <a href="https://playskydrift.com/">PlaySkyDrift.com</a>.</p>
+  </main>
+
+  <!-- Structured data for Game and FAQ to aid quality signals -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Sky Drift",
+    "applicationCategory": "Game",
+    "operatingSystem": "Web",
+    "genre": "Platformer",
+    "url": "https://playskydrift.com/",
+    "image": "https://playskydrift.com/logo.png",
+    "description": "Sky Drift is a free browser platformer where you jump between platforms and climb the night sky to set a new high score.",
+    "author": { "@type": "Organization", "name": "PlaySkyDrift" },
+    "publisher": { "@type": "Organization", "name": "PlaySkyDrift" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Is Sky Drift free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Sky Drift is free to play in modern web browsers with no download required."}},
+      {"@type":"Question","name":"Does it work offline?","acceptedAnswer":{"@type":"Answer","text":"Not currently. Add the game to your home screen for quick access and play with an internet connection."}},
+      {"@type":"Question","name":"Can I use a controller?","acceptedAnswer":{"@type":"Answer","text":"Most USB or Bluetooth controllers work on desktop via standard browser gamepad APIs."}},
+      {"@type":"Question","name":"How do scores save?","acceptedAnswer":{"@type":"Answer","text":"Your best score is saved locally in your browser storage."}}
+    ]
+  }
+  </script>
+
+  <footer class="site-footer">
+    <p>
+      <a href="about.html">About</a> ·
+      <a href="contact.html">Contact</a> ·
+      <a href="privacy.html">Privacy</a> ·
+      <a href="terms.html">Terms</a>
+    </p>
+  </footer>
+ 
   
 </body>
 </html>
