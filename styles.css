@@ -363,8 +363,11 @@ canvas { max-height: calc(100dvh - var(--wrap-pt) - 24px - var(--safe-bottom)); 
 @media (max-width: 540px) {
   /* Keep only Score in the middle, hide Best chip */
   .center .chip:nth-child(2) { display: none; }
-  .center .chip { padding: 6px 10px; font-size: 14px; }
+  .center .chip { padding: 6px 10px; font-size: 13.5px; }
   .right { gap: 8px; }
+  .topbar { padding: 0 10px; }
+  /* When the Score chip is visible, hide duplicate corner bubble to free space */
+  .score-bubble { display: none; }
 }
 
 @media (max-width: 420px) {
@@ -375,5 +378,12 @@ canvas { max-height: calc(100dvh - var(--wrap-pt) - 24px - var(--safe-bottom)); 
   .brand span { display: none; }
   .topbar { gap: 8px; }
   .icon-btn { width: 32px; height: 32px; }
-  .score-bubble { min-width: 36px; padding: 6px 8px; font-size: 12px; }
+  .score-bubble { display: inline-block; min-width: 36px; padding: 6px 8px; font-size: 12px; }
+  .topbar { padding: 0 8px; }
+}
+
+@media (max-width: 360px) {
+  .icon-btn { width: 30px; height: 30px; }
+  .right { gap: 6px; }
+  :root { --topbar-h: 50px; }
 }
