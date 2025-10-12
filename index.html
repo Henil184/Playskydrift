@@ -10,6 +10,11 @@
 
   <title>Sky Drift</title>
   
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <link rel="icon" type="image/png" href="https://playskydrift.com/logo.png">
@@ -35,10 +40,18 @@
 
   <style>
     :root {
+      /* Brandable theme variables */
+      --primary-color: #9be2f5;
+      --accent-color: #ffde59;
+      --surface: rgba(255,255,255,0.08);
+      --surface-2: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.16);
+      --chip-glow: 0 0 0 1px rgba(255,255,255,0.18), 0 8px 24px rgba(155,226,245,0.18);
+      --btn-glow: 0 8px 20px rgba(0,0,0,0.22);
       --bg-1: #0f2027;
       --bg-2: #203a43;
       --bg-3: #2c5364;
-      --accent: #ffde59; /* sun */
+      --accent: var(--accent-color);
       --platform: #8ee3f5;
       --platform-alt: #a0f0c2;
       --fragile: #ff9aa2;
@@ -46,15 +59,38 @@
       --text: #f3fbff;
       --shadow: rgba(0,0,0,0.25);
     }
+    /* Light theme override (opt-in: add body class="theme-light") */
+    body.theme-light {
+      --bg-1: #eaf3f7;
+      --bg-2: #cfe7f3;
+      --bg-3: #b7d8ea;
+      --text: #0d1b22;
+      --surface: rgba(0,0,0,0.06);
+      --surface-2: rgba(0,0,0,0.04);
+      --border: rgba(0,0,0,0.14);
+      --chip-glow: 0 0 0 1px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.12);
+      --btn-glow: 0 8px 20px rgba(0,0,0,0.12);
+    }
     
     html, body {
       height: 100%;
       margin: 0;
       background: linear-gradient(160deg, var(--bg-1), var(--bg-2) 50%, var(--bg-3));
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--text);
       overflow: hidden;
+      position: relative;
     }
+    /* Subtle animated gradient/particles overlay */
+    body::before {
+      content: "";
+      position: fixed; inset: -10% -10% 0 -10%; pointer-events: none; z-index: 0;
+      background: radial-gradient(1200px 800px at 20% -10%, rgba(255, 222, 89, 0.08), transparent 60%),
+                  radial-gradient(900px 600px at 80% -10%, rgba(255, 122, 168, 0.06), transparent 60%);
+      animation: bgShift 24s ease-in-out infinite alternate;
+      opacity: 0.9;
+    }
+    @keyframes bgShift { to { transform: translateY(8px) scale(1.02); filter: hue-rotate(6deg) saturate(1.02); } }
 
     .wrap {
       height: 100%;
@@ -67,11 +103,12 @@
       height: calc(min(92vw, 480px) * 1.5);
       max-height: 90vh;
       image-rendering: pixelated;
-      background: radial-gradient(1200px 800px at 20% -10%, rgba(255, 222, 89, 0.08), transparent 60%),
-                  radial-gradient(900px 600px at 80% -10%, rgba(255, 122, 168, 0.06), transparent 60%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
       border-radius: 16px;
-      box-shadow: 0 20px 50px var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.08);
+      box-shadow: 0 24px 60px var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.08);
+      transition: box-shadow .25s ease, transform .25s ease;
     }
+    canvas:focus { outline: none; box-shadow: 0 28px 70px rgba(0,0,0,0.35), 0 0 0 2px rgba(255,255,255,0.12) inset; }
 
     .hud {
       position: fixed;
@@ -87,10 +124,10 @@
       text-shadow: 0 2px 8px rgba(0,0,0,0.35);
     }
     .badge {
-      background: rgba(255,255,255,0.08);
+      background: var(--surface);
       padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid var(--border);
       pointer-events: auto;
     }
     .btn {
@@ -111,13 +148,15 @@
     }
     .card {
       width: min(92vw, 440px);
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.14);
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 16px;
       padding: 20px;
       box-shadow: 0 10px 40px var(--shadow);
       text-align: center;
+      transition: transform .2s ease, box-shadow .3s ease;
     }
+    .card:hover { transform: translateY(-1px); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
     .title {
       font-size: 28px;
       font-weight: 800;
@@ -139,15 +178,18 @@
       font-weight: 700;
       cursor: pointer;
       color: #0d1b22;
+      transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
     }
     .primary {
-      background: linear-gradient(180deg, #ffd86f, #ffbb00);
+      background: linear-gradient(180deg, var(--accent-color), #ffbb00);
       box-shadow: 0 6px 16px rgba(255, 187, 0, 0.35);
     }
     .secondary {
-      background: linear-gradient(180deg, #9be2f5, #5bd1f4);
+      background: linear-gradient(180deg, var(--primary-color), #5bd1f4);
       box-shadow: 0 6px 16px rgba(91, 209, 244, 0.35);
     }
+    .primary:hover, .secondary:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    .primary:active, .secondary:active { transform: translateY(1px) scale(0.98); }
 
     .controls {
       position: fixed;
@@ -226,12 +268,13 @@
     .brand { display:flex; align-items:center; gap:8px;
       font-weight: 900; letter-spacing: .4px;
       padding: 6px 10px; border-radius: 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.16);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
       text-shadow: 0 2px 8px rgba(0,0,0,0.35);
       pointer-events: none;
     }
+    .brand span { font-family: 'Orbitron', 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
     .brand-logo { width: 28px; height: 28px; object-fit: cover; border-radius: 50%;
       /* Crop out any outer white by clipping to the inner circle */
       clip-path: circle(48% at 50% 50%);
@@ -240,21 +283,23 @@
     }
     .center { gap: 10px; }
     .chip {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.16);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
       border-radius: 999px; padding: 8px 14px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 14px rgba(0,0,0,0.18);
       font-weight: 800;
       white-space: nowrap;
+      animation: hudPulse 3.2s ease-in-out infinite;
     }
+    @keyframes hudPulse { 0%,100%{ box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 14px rgba(0,0,0,0.18);} 50%{ box-shadow: var(--chip-glow);} }
     .right { justify-content: flex-end; gap: 10px; }
     .icon-btn {
       width: 36px; height: 36px; border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
       color: var(--text); display: grid; place-items: center;
       cursor: pointer; pointer-events: auto;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 8px 20px rgba(0,0,0,0.22);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), var(--btn-glow);
       transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
     }
     .icon-btn:hover { box-shadow: 0 0 0 1px rgba(255,255,255,0.18), 0 10px 24px rgba(0,0,0,0.28); }
@@ -262,8 +307,8 @@
     .icon-btn svg { width: 18px; height: 18px; display: block; }
     .score-bubble {
       min-width: 42px; text-align: center; padding: 8px 12px; border-radius: 12px; font-weight: 900;
-      background: rgba(255,255,255,0.09);
-      border: 1px solid rgba(255,255,255,0.16);
+      background: var(--surface);
+      border: 1px solid var(--border);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 6px 18px rgba(0,0,0,0.22);
       text-shadow: 0 2px 8px rgba(0,0,0,0.35);
       pointer-events: none;
