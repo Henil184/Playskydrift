@@ -194,6 +194,8 @@
         if (closeBtn) closeBtn.addEventListener('click', hide);
         if (resetBtn) resetBtn.addEventListener('click', ()=>{ localStorage.removeItem(LB_KEY); renderLeaderboard(); });
         renderLeaderboard();
+        // Ensure it starts closed on load (desktop + mobile)
+        hide();
       }
 
       // Sound (minimal pop). Off by default for calm UX
