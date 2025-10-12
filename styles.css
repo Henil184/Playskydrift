@@ -358,3 +358,22 @@ canvas { max-height: calc(100dvh - var(--wrap-pt) - 24px - var(--safe-bottom)); 
   .icon-btn { width: 34px; height: 34px; }
   .chip { padding: 6px 12px; }
 }
+
+/* Topbar responsive clean-up to prevent overlap on phones */
+@media (max-width: 540px) {
+  /* Keep only Score in the middle, hide Best chip */
+  .center .chip:nth-child(2) { display: none; }
+  .center .chip { padding: 6px 10px; font-size: 14px; }
+  .right { gap: 8px; }
+}
+
+@media (max-width: 420px) {
+  /* Hide center chips entirely; rely on right score bubble */
+  .center { display: none; }
+  /* Tighten brand and optionally hide text label to fit */
+  .brand { padding: 4px 6px; }
+  .brand span { display: none; }
+  .topbar { gap: 8px; }
+  .icon-btn { width: 32px; height: 32px; }
+  .score-bubble { min-width: 36px; padding: 6px 8px; font-size: 12px; }
+}
