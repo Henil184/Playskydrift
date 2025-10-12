@@ -28,7 +28,7 @@
 
   <title>Sky Drift – Play Free Online Jump Game | PlaySkyDrift.com</title>
 <meta name="description" content="Play Sky Drift — a fun free jump game! Jump between platforms, climb the night sky, and chase your best score. Play instantly on desktop or mobile.">
-<meta name="keywords" content="Sky Drift, play Sky Drift, jump game online, fun browser game, play free game, platform jumper, mobile game, playskydrift">
+<meta name="keywords" content="Sky Drift, play Sky Drift, jump game online, fun browser game, play free game, platform jumper, mobile game, playskydrift, sky drift jump game">
 <meta name="author" content="Henil Patel">
 <link rel="canonical" href="https://playskydrift.com/">
 <meta name="robots" content="index, follow">
@@ -205,12 +205,121 @@
     }
     .badge { font-size: 16px; font-weight: 800; }
     .corner-score { font-size: 26px; font-weight: 900; }
+    /* Hide legacy HUD elements when new topbar is present */
+    .hud, .game-title, .corner-score { display: none !important; }
+
+    /* Modern Topbar */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; height: 58px;
+      display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px;
+      padding: 0 14px; z-index: 9;
+      background: linear-gradient(180deg, rgba(15,32,39,0.85), rgba(32,58,67,0.55));
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      color: var(--text);
+      user-select: none;
+    }
+    .topbar .left, .topbar .center, .topbar .right { display: flex; align-items: center; min-width: 0; }
+    .topbar .left { gap: 8px; }
+    .brand { display:flex; align-items:center; gap:8px;
+      font-weight: 900; letter-spacing: .4px;
+      padding: 6px 10px; border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      pointer-events: none;
+    }
+    .brand-logo { width: 28px; height: 28px; object-fit: cover; border-radius: 50%;
+      /* Crop out any outer white by clipping to the inner circle */
+      clip-path: circle(48% at 50% 50%);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.18), 0 4px 12px rgba(0,0,0,0.25);
+      pointer-events: none; flex: 0 0 28px;
+    }
+    .center { gap: 10px; }
+    .chip {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px; padding: 8px 14px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 14px rgba(0,0,0,0.18);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .right { justify-content: flex-end; gap: 10px; }
+    .icon-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: var(--text); display: grid; place-items: center;
+      cursor: pointer; pointer-events: auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 8px 20px rgba(0,0,0,0.22);
+      transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+    }
+    .icon-btn:hover { box-shadow: 0 0 0 1px rgba(255,255,255,0.18), 0 10px 24px rgba(0,0,0,0.28); }
+    .icon-btn:active { transform: translateY(1px) scale(0.98); }
+    .icon-btn svg { width: 18px; height: 18px; display: block; }
+    .score-bubble {
+      min-width: 42px; text-align: center; padding: 8px 12px; border-radius: 12px; font-weight: 900;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 6px 18px rgba(0,0,0,0.22);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      pointer-events: none;
+    }
+
+    /* Neon Glass variation (optional): add class="neon" on <body> */
+    body.neon .chip {
+      background: linear-gradient(90deg, rgba(155,226,245,0.25), rgba(255,122,168,0.25));
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.18), 0 8px 24px rgba(155,226,245,0.18);
+    }
+    body.neon .icon-btn {
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+      border-color: rgba(255,255,255,0.24);
+    }
+    body.neon .brand {
+      background: transparent; border: 1px solid rgba(255,255,255,0.18);
+      text-shadow: 0 0 18px rgba(155,226,245,0.55);
+    }
+
+    /* Responsive fixes for small screens */
+    @media (max-width: 480px) {
+      .topbar { height: auto; padding: 6px 8px 8px; grid-template-columns: auto auto; grid-template-areas: 'brand actions' 'center center'; row-gap: 6px; }
+      .topbar .left { grid-area: brand; }
+      .topbar .right { grid-area: actions; }
+      .topbar .center { grid-area: center; justify-content: center; flex-wrap: wrap; gap: 6px; }
+      .brand { padding: 6px 8px; }
+      .brand span { font-size: 14px; }
+      .brand-logo { width: 26px; height: 26px; }
+      .chip { padding: 6px 10px; font-size: 14px; }
+      .icon-btn { width: 32px; height: 32px; }
+      .score-bubble { padding: 6px 10px; }
+    }
+    @media (max-width: 340px) {
+      .score-bubble { display: none; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <canvas id="game" width="420" height="630" aria-label="Jump Game"></canvas>
   </div>
+
+  <header class="topbar">
+    <div class="left">
+      <div class="brand"><img class="brand-logo" src="logo.png" alt="Sky Drift logo"><span>Sky Drift</span></div>
+    </div>
+    <div class="center">
+      <div class="chip">Score: <span id="score2">0</span></div>
+      <div class="chip">Best: <span id="best2">0</span></div>
+    </div>
+    <div class="right">
+      <button class="icon-btn" id="pauseBtn2" title="Pause/Resume">⏯</button>
+      <button class="icon-btn" id="restartBtn2" title="Restart">↻</button>
+      <div class="score-bubble"><span id="scoreCorner2">0</span></div>
+    </div>
+  </header>
 
   <div class="hud">
     <div class="badge">Score: <span id="score">0</span></div>
@@ -260,9 +369,9 @@
       const W = canvas.width;
       const H = canvas.height;
 
-      const scoreEl = document.getElementById('score');
-      const bestEl = document.getElementById('best');
-      const scoreCornerEl = document.getElementById('scoreCorner');
+      const scoreEl = document.getElementById('score2');
+      const bestEl = document.getElementById('best2');
+      const scoreCornerEl = document.getElementById('scoreCorner2');
       const startOverlay = document.getElementById('startOverlay');
       const gameOverOverlay = document.getElementById('gameOver');
       const finalScoreEl = document.getElementById('finalScore');
@@ -271,8 +380,11 @@
       const muteBtn = document.getElementById('muteBtn');
       const againBtn = document.getElementById('againBtn');
       const homeBtn = document.getElementById('homeBtn');
-      const pauseBtn = document.getElementById('pauseBtn');
-      const restartBtn = document.getElementById('restartBtn');
+      const pauseBtn = document.getElementById('pauseBtn2');
+      const restartBtn = document.getElementById('restartBtn2');
+      // Ensure crisp vector icons regardless of encoding
+      if (pauseBtn) pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg>';
+      if (restartBtn) restartBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5a7 7 0 1 1-6.3 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M6 3v6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
       const touchControls = document.getElementById('touchControls');
       const leftBtn = document.getElementById('leftBtn');
       const rightBtn = document.getElementById('rightBtn');
