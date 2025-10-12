@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Sky Drift</title>
+  <style>
+    :root {
+      --bg-1: #0f2027;
+      --bg-2: #203a43;
+      --bg-3: #2c5364;
+      --accent: #ffde59; /* sun */
+      --platform: #8ee3f5;
+      --platform-alt: #a0f0c2;
+      --fragile: #ff9aa2;
+      --player: #ff7aa8;
+      --text: #f3fbff;
+      --shadow: rgba(0,0,0,0.25);
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: linear-gradient(160deg, var(--bg-1), var(--bg-2) 50%, var(--bg-3));
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .wrap {
+      height: 100%;
+      display: grid;
+      place-items: center;
+    }
+
+    canvas {
+      width: min(92vw, 480px);
+      height: calc(min(92vw, 480px) * 1.5);
+      max-height: 90vh;
+      image-rendering: pixelated;
+      background: radial-gradient(1200px 800px at 20% -10%, rgba(255, 222, 89, 0.08), transparent 60%),
+                  radial-gradient(900px 600px at 80% -10%, rgba(255, 122, 168, 0.06), transparent 60%);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .hud {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      opacity: 0.95;
+      user-select: none;
+      pointer-events: none;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    }
+    .badge {
+      background: rgba(255,255,255,0.08);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      pointer-events: auto;
+    }
+    .btn {
+      cursor: pointer;
+      transition: transform 120ms ease, filter 120ms ease;
+    }
+    .btn:active { transform: translateY(1px) scale(0.98); }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      backdrop-filter: blur(6px) saturate(110%);
+      -webkit-backdrop-filter: blur(6px) saturate(110%);
+      background: linear-gradient(160deg, rgba(15,32,39,0.35), rgba(32,58,67,0.35));
+      z-index: 10;
+    }
+    .card {
+      width: min(92vw, 440px);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 40px var(--shadow);
+      text-align: center;
+    }
+    .title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin: 6px 0 14px;
+    }
+    .muted { opacity: 0.8; }
+    .cta {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .primary, .secondary {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #0d1b22;
+    }
+    .primary {
+      background: linear-gradient(180deg, #ffd86f, #ffbb00);
+      box-shadow: 0 6px 16px rgba(255, 187, 0, 0.35);
+    }
+    .secondary {
+      background: linear-gradient(180deg, #9be2f5, #5bd1f4);
+      box-shadow: 0 6px 16px rgba(91, 209, 244, 0.35);
+    }
+
+    .controls {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 5;
+      user-select: none;
+    }
+    .ctrl-btn {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.12);
+      color: var(--text);
+      display: grid; place-items: center;
+      font-size: 22px;
+      box-shadow: 0 6px 18px var(--shadow);
+      backdrop-filter: blur(6px);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .ctrl-btn:active { transform: translateY(1px) scale(0.98); }
+
+    @media (min-height: 780px) {
+      .controls { bottom: 24px; }
+    }
+    .corner-score {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      pointer-events: none;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    }
+    /* Enhancements for title and bigger scores */
+    .game-title {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      pointer-events: none;
+    }
+    .badge { font-size: 16px; font-weight: 800; }
+    .corner-score { font-size: 26px; font-weight: 900; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="game" width="420" height="630" aria-label="Jump Game"></canvas>
+  </div>
+
+  <div class="hud">
+    <div class="badge">Score: <span id="score">0</span></div>
+    <div class="badge">Best: <span id="best">0</span></div>
+    <div class="badge btn" id="pauseBtn" title="Pause/Resume">⏯</div>
+    <div class="badge btn" id="restartBtn" title="Restart">↻</div>
+  </div>
+
+  <div class="game-title">Sky Drift</div>
+
+  <div class="corner-score"><span id="scoreCorner">0</span></div>
+
+  <div class="overlay" id="startOverlay">
+    <div class="card">
+      <div style="font-size: 42px">🌙</div>
+      <div class="title">Sky Drift</div>
+      <div class="muted">Jump from platform to platform, climb the night sky, and chase your best score. Keyboard or touch controls.</div>
+      <div class="cta">
+        <button class="primary" id="startBtn">Start Game</button>
+        <button class="secondary" id="muteBtn">Sound: Off</button>
+      </div>
+      <div class="muted" style="margin-top:10px; font-size: 12px;">Tip: Wrap around the sides. Land only while falling.</div>
+    </div>
+  </div>
+
+  <div class="overlay" id="gameOver" style="display:none;">
+    <div class="card">
+      <div style="font-size: 42px">⭐</div>
+      <div class="title">Game Over</div>
+      <div class="muted">Score: <span id="finalScore">0</span> · Best: <span id="finalBest">0</span></div>
+      <div class="cta">
+        <button class="primary" id="againBtn">Play Again</button>
+        <button class="secondary" id="homeBtn">Home</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls" id="touchControls" style="display:none;">
+    <div class="ctrl-btn" id="leftBtn">◀</div>
+    <div class="ctrl-btn" id="rightBtn">▶</div>
+  </div>
+
+  <script>
+    (function() {
+      const canvas = document.getElementById('game');
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;
+      const H = canvas.height;
+
+      const scoreEl = document.getElementById('score');
+      const bestEl = document.getElementById('best');
+      const scoreCornerEl = document.getElementById('scoreCorner');
+      const startOverlay = document.getElementById('startOverlay');
+      const gameOverOverlay = document.getElementById('gameOver');
+      const finalScoreEl = document.getElementById('finalScore');
+      const finalBestEl = document.getElementById('finalBest');
+      const startBtn = document.getElementById('startBtn');
+      const muteBtn = document.getElementById('muteBtn');
+      const againBtn = document.getElementById('againBtn');
+      const homeBtn = document.getElementById('homeBtn');
+      const pauseBtn = document.getElementById('pauseBtn');
+      const restartBtn = document.getElementById('restartBtn');
+      const touchControls = document.getElementById('touchControls');
+      const leftBtn = document.getElementById('leftBtn');
+      const rightBtn = document.getElementById('rightBtn');
+
+      // Sound (minimal pop). Off by default for calm UX
+      let soundOn = false;
+      function popSound() {
+        if (!soundOn) return;
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'triangle';
+        o.frequency.value = 600;
+        o.connect(g); g.connect(ctx.destination);
+        g.gain.setValueAtTime(0.15, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.08);
+        o.start(); o.stop(ctx.currentTime + 0.08);
+      }
+
+      // Game state
+      let running = false;
+      let paused = false;
+      let gameOver = false;
+      let score = 0;
+      let best = Number(localStorage.getItem('jump-best') || 0);
+      bestEl.textContent = best;
+
+      // Physics
+      const gravity = 0.35;
+      const jumpV = -10.5;
+      const moveAccel = 0.45;
+      const friction = 0.985;
+      const maxVX = 4.2;
+
+      // Player
+      const player = { x: W/2, y: H-80, vx: 0, vy: -8, w: 34, h: 34, dir: 1, boost: null };
+
+      // Platforms
+      const platforms = [];
+      // Items (power-ups not attached to platform)
+      const items = [];
+      const PLATFORM_TYPES = { NORMAL: 0, MOVING: 1, FRAGILE: 2 };
+      const PLATFORM_COLORS = {
+        [PLATFORM_TYPES.NORMAL]: getCssVar('--platform'),
+        [PLATFORM_TYPES.MOVING]: getCssVar('--platform-alt'),
+        [PLATFORM_TYPES.FRAGILE]: getCssVar('--fragile')
+      };
+
+      function getCssVar(name) {
+        return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      }
+
+      // Input
+      const keys = { left: false, right: false };
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') keys.left = true;
+        if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') keys.right = true;
+        if (e.key === ' ' || e.key === 'Enter') {
+          if (!running) startGame();
+          else if (!gameOver) togglePause();
+        }
+      });
+      window.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') keys.left = false;
+        if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') keys.right = false;
+      });
+
+      // Touch controls display for narrow screens
+      function updateTouchVisibility() {
+        const isNarrow = window.innerWidth < 640;
+        touchControls.style.display = isNarrow ? 'flex' : 'none';
+      }
+      window.addEventListener('resize', updateTouchVisibility);
+      updateTouchVisibility();
+
+      // Touch controls behavior
+      const press = (key, on) => () => { keys[key] = on; };
+      leftBtn.addEventListener('touchstart', press('left', true));
+      leftBtn.addEventListener('touchend', press('left', false));
+      leftBtn.addEventListener('touchcancel', press('left', false));
+      rightBtn.addEventListener('touchstart', press('right', true));
+      rightBtn.addEventListener('touchend', press('right', false));
+      rightBtn.addEventListener('touchcancel', press('right', false));
+
+      // Also allow touching anywhere on the canvas (left/right halves) to move
+      function updateKeysFromTouches(touches) {
+        const rect = canvas.getBoundingClientRect();
+        let leftActive = false;
+        let rightActive = false;
+        for (let i = 0; i < touches.length; i++) {
+          const t = touches[i];
+          const x = t.clientX - rect.left;
+          if (x < rect.width / 2) leftActive = true; else rightActive = true;
+        }
+        keys.left = leftActive;
+        keys.right = rightActive;
+      }
+      const touchOpts = { passive: false };
+      canvas.addEventListener('touchstart', (e) => { updateKeysFromTouches(e.touches); e.preventDefault(); }, touchOpts);
+      canvas.addEventListener('touchmove',  (e) => { updateKeysFromTouches(e.touches); e.preventDefault(); }, touchOpts);
+      canvas.addEventListener('touchend',   (e) => { updateKeysFromTouches(e.touches); e.preventDefault(); }, touchOpts);
+      canvas.addEventListener('touchcancel',(e) => { updateKeysFromTouches(e.touches); e.preventDefault(); }, touchOpts);
+
+      // UI buttons
+      startBtn.addEventListener('click', () => startGame());
+      againBtn.addEventListener('click', () => startGame());
+      homeBtn.addEventListener('click', () => showStart());
+      pauseBtn.addEventListener('click', () => togglePause());
+      restartBtn.addEventListener('click', () => startGame());
+      muteBtn.addEventListener('click', () => {
+        soundOn = !soundOn;
+        muteBtn.textContent = `Sound: ${soundOn ? 'On' : 'Off'}`;
+      });
+
+      // Starfield for ambience
+      const stars = [...Array(60)].map(() => ({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        r: Math.random()*1.6 + 0.4,
+        a: Math.random()*0.5 + 0.3,
+        s: Math.random()*0.3 + 0.05
+      }));
+
+      function reset() {
+        score = 0;
+        scoreEl.textContent = '0';
+        scoreCornerEl.textContent = '0';
+        gameOver = false;
+        paused = false;
+        player.x = W/2; player.y = H - 80; player.vx = 0; player.vy = -10; player.dir = 1; player.boost = null;
+        platforms.length = 0;
+        items.length = 0;
+        // Seed initial platforms
+        const step = 62;
+        let y = H - 20;
+        for (let i = 0; i < 12; i++) {
+          addPlatform(Math.random()*(W-68)+34, y);
+          y -= step;
+        }
+        // Ground safety platform
+        platforms.push({ x: W/2 - 40, y: H - 12, w: 80, h: 10, type: PLATFORM_TYPES.NORMAL, vx: 0, broken: false });
+      }
+
+      function addPlatform(x, y) {
+        const r = Math.random();
+        let type = PLATFORM_TYPES.NORMAL;
+        if (r > 0.82) type = PLATFORM_TYPES.MOVING; // ~18%
+        else if (r < 0.07) type = PLATFORM_TYPES.FRAGILE; // ~7%
+        const p = { x, y, w: 68, h: 12, type, vx: (type===1? (Math.random()<0.5? -0.8:0.8):0), broken: false, spring: null };
+        // Chance to add a spring on normal platforms
+        if (type === PLATFORM_TYPES.NORMAL && Math.random() < 0.14) {
+          // Spring roughly centered
+          p.spring = { offsetX: Math.random() * (p.w - 20) + 10, used: false, comp: 0 };
+        }
+        platforms.push(p);
+        // Chance to spawn jetpack or fan above some platforms
+        const roll = Math.random();
+        if (roll > 0.97) { // ~3% jetpack
+          items.push({ type: 'JET', x: p.x + p.w/2 - 8, y: p.y - 18, w: 16, h: 14, taken: false, t: 0 });
+        } else if (roll > 0.94) { // ~3% fan (propeller hat)
+          items.push({ type: 'FAN', x: p.x + p.w/2 - 8, y: p.y - 18, w: 16, h: 12, taken: false, t: 0 });
+        }
+      }
+
+      function startGame() {
+        reset();
+        running = true;
+        startOverlay.style.display = 'none';
+        gameOverOverlay.style.display = 'none';
+        lastTime = performance.now();
+        loop();
+      }
+
+      function showStart() {
+        running = false;
+        paused = false;
+        gameOver = false;
+        startOverlay.style.display = 'grid';
+        gameOverOverlay.style.display = 'none';
+      }
+
+      function endGame() {
+        running = false;
+        gameOver = true;
+        finalScoreEl.textContent = Math.floor(score);
+        finalBestEl.textContent = best;
+        gameOverOverlay.style.display = 'grid';
+      }
+
+      function togglePause() {
+        if (!running || gameOver) return;
+        paused = !paused;
+      }
+
+      // Core loop
+      let lastTime = 0;
+      function loop(ts) {
+        if (!running) return;
+        const dt = Math.min(32, ts - lastTime || 16) / 16.6667; // normalize to ~60fps units
+        lastTime = ts;
+        if (!paused) update(dt);
+        draw();
+        requestAnimationFrame(loop);
+      }
+
+      function update(dt) {
+        // Player input
+        if (keys.left)  { player.vx -= moveAccel * dt; player.dir = -1; }
+        if (keys.right) { player.vx += moveAccel * dt; player.dir =  1; }
+        player.vx *= friction;
+        player.vx = Math.max(-maxVX, Math.min(maxVX, player.vx));
+
+        // Apply gravity unless strong boost locks vertical speed
+        player.vy += gravity * dt;
+
+        // Active boosts
+        if (player.boost) {
+          const ms = dt * 16.6667;
+          player.boost.t -= ms;
+          if (player.boost.type === 'JET') {
+            // Strong sustained upward push
+            player.vy = Math.min(player.vy, -12.5);
+          } else if (player.boost.type === 'FAN') {
+            // Moderate push
+            player.vy = Math.min(player.vy, -9.5);
+          }
+          if (player.boost.t <= 0) player.boost = null;
+        }
+        player.x += player.vx * dt * 60/60; // normalized
+        player.y += player.vy * dt * 60/60;
+
+        // Wrap horizontally
+        if (player.x < -player.w/2) player.x = W + player.w/2;
+        if (player.x > W + player.w/2) player.x = -player.w/2;
+
+        // Platforms update
+        for (const p of platforms) {
+          if (p.type === PLATFORM_TYPES.MOVING) {
+            p.x += p.vx * dt * 60/60;
+            if (p.x < 10 || p.x + p.w > W - 10) p.vx *= -1;
+          }
+          // Spring relax animation
+          if (p.spring && p.spring.used && p.spring.comp < 1) {
+            p.spring.comp = Math.min(1, p.spring.comp + 0.08 * dt * 60/60);
+          }
+        }
+
+        // Collision (only when falling)
+        if (player.vy > 0) {
+          for (const p of platforms) {
+            if (p.broken) continue;
+            const withinX = player.x + player.w*0.6 > p.x && player.x + player.w*0.4 < p.x + p.w;
+            const withinY = player.y + player.h >= p.y && player.y + player.h <= p.y + p.h + player.vy + 2;
+            if (withinX && withinY) {
+              // bounce
+              let bounce = jumpV;
+              // Spring super-bounce
+              if (p.spring && !p.spring.used) {
+                p.spring.used = true;
+                bounce = -16.5;
+              }
+              player.vy = bounce;
+              popSound();
+              if (p.type === PLATFORM_TYPES.FRAGILE) {
+                p.broken = true;
+              }
+            }
+          }
+        }
+
+        // Item pickups (JET / FAN)
+        for (const it of items) {
+          if (it.taken) continue;
+          const a = { x: player.x, y: player.y, w: player.w, h: player.h };
+          const b = it;
+          const hit = a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+          if (hit) {
+            if (it.type === 'JET') {
+              player.boost = { type: 'JET', t: 2200 };
+            } else if (it.type === 'FAN') {
+              player.boost = { type: 'FAN', t: 1200 };
+            }
+            it.taken = true;
+            popSound();
+          }
+        }
+
+        // Scroll world up when player climbs
+        const topZone = H * 0.4;
+        if (player.y < topZone) {
+          const dy = (topZone - player.y);
+          player.y = topZone;
+          score += dy * 0.15;
+          scoreEl.textContent = Math.floor(score);
+          scoreCornerEl.textContent = scoreEl.textContent;
+          for (const p of platforms) p.y += dy;
+          for (const s of stars) s.y += dy * 0.2; // gentle parallax
+          for (const it of items) it.y += dy;
+
+          // Recycle platforms that moved off-screen
+          while (platforms.length && platforms[0].y > H + 40) {
+            platforms.shift();
+          }
+          // Remove items off-screen
+          for (let i = items.length - 1; i >= 0; i--) {
+            if (items[i].y > H + 40 || items[i].taken) items.splice(i,1);
+          }
+          // Add new platforms at top
+          const highestY = Math.min(...platforms.map(p => p.y));
+          while (platforms.length < 14) {
+            addPlatform(Math.random()*(W-68)+34, highestY - (Math.random()*42 + 50));
+          }
+        }
+
+        // Remove broken fragile platforms slowly
+        for (let i = platforms.length - 1; i >= 0; i--) {
+          const p = platforms[i];
+          if (p.broken) p.h -= 0.9 * dt * 60/60;
+          if (p.broken && p.h < 2) platforms.splice(i,1);
+        }
+
+        // Death condition
+        if (player.y > H + 60) {
+          if (score > best) {
+            best = Math.floor(score);
+            localStorage.setItem('jump-best', best);
+            bestEl.textContent = best;
+          }
+          player.boost = null;
+          endGame();
+        }
+      }
+
+      function drawRoundedRect(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+
+      function draw() {
+        // Clear
+        ctx.clearRect(0, 0, W, H);
+
+        // Stars
+        ctx.save();
+        for (const s of stars) {
+          ctx.globalAlpha = s.a;
+          ctx.fillStyle = '#fff';
+          ctx.beginPath();
+          ctx.arc(s.x, (s.y%H+H)%H, s.r, 0, Math.PI*2);
+          ctx.fill();
+        }
+        ctx.restore();
+
+        // Platforms
+        for (const p of platforms) {
+          const color = PLATFORM_COLORS[p.type];
+          const y = p.y;
+          ctx.save();
+          // Shadow
+          ctx.globalAlpha = 0.25;
+          drawRoundedRect(p.x+2, y+4, p.w, p.h, 6);
+          ctx.fillStyle = 'rgba(0,0,0,0.3)';
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          // Body
+          drawRoundedRect(p.x, y, p.w, p.h, 6);
+          const grad = ctx.createLinearGradient(p.x, y, p.x, y+p.h);
+          grad.addColorStop(0, color);
+          grad.addColorStop(1, shade(color, -10));
+          ctx.fillStyle = grad;
+          ctx.fill();
+          // Top highlight
+          ctx.fillStyle = 'rgba(255,255,255,0.25)';
+          drawRoundedRect(p.x+2, y+1, p.w-4, 3, 3);
+          ctx.fill();
+          // Spring
+          if (p.spring && p.spring.comp < 1) {
+            const sx = p.x + p.spring.offsetX - 8;
+            const sy = y - 10 + p.spring.comp * 6; // compress
+            const sh = 10 - p.spring.comp * 6;
+            // spring base
+            ctx.fillStyle = '#d7e6ff';
+            drawRoundedRect(sx, sy, 16, sh, 3);
+            ctx.fill();
+            // coil line
+            ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(sx+2, sy+2);
+            ctx.lineTo(sx+14, sy+sh-2);
+            ctx.stroke();
+          }
+          if (p.type === PLATFORM_TYPES.MOVING) {
+            // indicator dots
+            ctx.fillStyle = 'rgba(0,0,0,0.25)';
+            for (let i=0;i<3;i++) ctx.fillRect(p.x + 10 + i*16, y + p.h/2 - 1, 4, 2);
+          }
+          if (p.type === PLATFORM_TYPES.FRAGILE) {
+            ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(p.x+10, y);
+            ctx.lineTo(p.x+20, y+p.h);
+            ctx.moveTo(p.x+30, y);
+            ctx.lineTo(p.x+40, y+p.h);
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+
+        // Items (power-ups)
+        for (const it of items) {
+          if (it.taken) continue;
+          if (it.type === 'JET') {
+            // small jetpack canister
+            ctx.save();
+            ctx.fillStyle = '#ffd86f';
+            drawRoundedRect(it.x, it.y, it.w, it.h, 3);
+            ctx.fill();
+            ctx.fillStyle = '#b38b00';
+            ctx.fillRect(it.x+3, it.y+2, it.w-6, 3);
+            ctx.restore();
+          } else if (it.type === 'FAN') {
+            // propeller hat pickup
+            ctx.save();
+            ctx.fillStyle = '#8ee3f5';
+            drawRoundedRect(it.x, it.y+4, it.w, 6, 3); // cap
+            ctx.fill();
+            ctx.strokeStyle = '#ff7aa8';
+            ctx.beginPath();
+            ctx.moveTo(it.x+2, it.y+4);
+            ctx.lineTo(it.x+it.w-2, it.y+4);
+            ctx.stroke();
+            ctx.restore();
+          }
+        }
+
+        // Player (cute blob)
+        const px = player.x; const py = player.y; const w = player.w; const h = player.h;
+        ctx.save();
+        // Shadow
+        ctx.globalAlpha = 0.25;
+        ctx.beginPath();
+        ctx.ellipse(px + w/2, py + h, w*0.6, 6, 0, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(0,0,0,0.35)';
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        // Body
+        drawRoundedRect(px, py, w, h, 10);
+        const bodyGrad = ctx.createLinearGradient(px, py, px, py+h);
+        bodyGrad.addColorStop(0, getCssVar('--player'));
+        bodyGrad.addColorStop(1, shade(getCssVar('--player'), -12));
+        ctx.fillStyle = bodyGrad;
+        ctx.fill();
+        // Boost visuals
+        if (player.boost && player.boost.type === 'JET') {
+          // flame under player
+          ctx.save();
+          const flameX = px + w/2 - 3;
+          const flameY = py + h;
+          const grad = ctx.createLinearGradient(flameX, flameY, flameX, flameY+14);
+          grad.addColorStop(0, '#fff5a3');
+          grad.addColorStop(1, '#ff7a00');
+          ctx.fillStyle = grad;
+          drawRoundedRect(flameX-3, flameY, 6, 14, 3);
+          ctx.fill();
+          ctx.restore();
+        }
+        // Eyes
+        ctx.fillStyle = '#0b1321';
+        ctx.beginPath();
+        const eyeOffset = player.dir * 2;
+        ctx.arc(px + w*0.35 + eyeOffset, py + h*0.42, 3, 0, Math.PI*2);
+        ctx.arc(px + w*0.65 + eyeOffset, py + h*0.42, 3, 0, Math.PI*2);
+        ctx.fill();
+        // Cheeks
+        ctx.globalAlpha = 0.6;
+        ctx.fillStyle = 'rgba(255,122,168,0.5)';
+        ctx.beginPath();
+        ctx.arc(px + w*0.25 + eyeOffset, py + h*0.6, 2.5, 0, Math.PI*2);
+        ctx.arc(px + w*0.75 + eyeOffset, py + h*0.6, 2.5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        // Hat / propeller when FAN active
+        if (player.boost && player.boost.type === 'FAN') {
+          ctx.save();
+          ctx.fillStyle = '#9be2f5';
+          drawRoundedRect(px + 6, py - 6, w - 12, 6, 3);
+          ctx.fill();
+          // spinning propeller
+          ctx.strokeStyle = '#ffde59';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          const cx = px + w/2; const cy = py - 6;
+          const t = performance.now() * 0.02;
+          const r = 8;
+          ctx.moveTo(cx - r, cy);
+          ctx.lineTo(cx + r, cy);
+          ctx.stroke();
+          ctx.restore();
+        } else {
+          // Default headband
+          ctx.fillStyle = '#ffde59';
+          drawRoundedRect(px + 6, py - 6, w - 12, 6, 3);
+          ctx.fill();
+        }
+        ctx.restore();
+
+        // UI pause indicator
+        if (paused && !gameOver) {
+          ctx.fillStyle = 'rgba(0,0,0,0.35)';
+          ctx.fillRect(W/2-18, 30, 8, 20);
+          ctx.fillRect(W/2+10, 30, 8, 20);
+        }
+      }
+
+      function shade(hex, percent) {
+        const h = hex.replace('#','');
+        const num = parseInt(h.length===3 ? h.split('').map(c=>c+c).join('') : h, 16);
+        let r = (num >> 16) + percent;
+        let g = (num >> 8 & 0x00FF) + percent;
+        let b = (num & 0x0000FF) + percent;
+        r = Math.max(0, Math.min(255, r));
+        g = Math.max(0, Math.min(255, g));
+        b = Math.max(0, Math.min(255, b));
+        return `#${(b | (g << 8) | (r << 16)).toString(16).padStart(6,'0')}`;
+      }
+
+      // Initialize to home screen
+      showStart();
+      // Focus canvas for keyboard on click
+      canvas.addEventListener('click', () => { if (!running) startGame(); });
+    })();
+  </script>
+</body>
+</html>
