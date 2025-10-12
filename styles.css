@@ -109,7 +109,7 @@ canvas:focus { outline: none; box-shadow: 0 28px 70px rgba(0,0,0,0.35), 0 0 0 2p
   backdrop-filter: blur(6px) saturate(110%);
   -webkit-backdrop-filter: blur(6px) saturate(110%);
   background: linear-gradient(160deg, rgba(15,32,39,0.35), rgba(32,58,67,0.35));
-  z-index: 10;
+  z-index: 20; /* above leaderboard/topbar on mobile */
 }
 .card {
   width: min(92vw, 440px);
@@ -304,7 +304,7 @@ body.neon .icon-btn {
 /* Leaderboard styles */
 .leaderboard-card { position: fixed; top: 72px; right: 12px; width: 320px; max-height: 64vh; z-index: 12;
   background: var(--surface); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 10px 32px var(--shadow); overflow: hidden; transition: transform .2s ease, opacity .2s ease; }
-.leaderboard-card.hidden { transform: translateY(-6px) scale(0.98); opacity: 0.92; }
+.leaderboard-card.hidden { display: none !important; opacity: 0; transform: none; }
 .lb-header { display:flex; align-items:center; justify-content:space-between; padding: 10px 12px; border-bottom: 1px solid var(--border); }
 .lb-title { font-weight: 900; letter-spacing: .3px; }
 .lb-actions { display:flex; gap:8px; }
@@ -325,7 +325,7 @@ body.neon .icon-btn {
     top: auto; bottom: 12px; right: 50%; transform: translate(50%, 12px);
     width: min(92vw, 420px); max-height: 50vh;
   }
-  .leaderboard-card.hidden { transform: translate(50%, 24px) scale(0.98); }
+  .leaderboard-card.hidden { display: none !important; }
 }
 
 /* Safe-area and dynamic viewport adjustments for mobile */
