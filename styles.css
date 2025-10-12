@@ -338,12 +338,14 @@ body.neon .icon-btn {
 /* Safe-area and dynamic viewport adjustments for mobile */
 :root {
   --topbar-h: 58px;
-  --wrap-pt: calc(var(--topbar-h) + 14px + env(safe-area-inset-top, 0px));
+  /* This is updated by JS to the actual measured topbar height.
+     We keep wrap padding as topbar height + breathing room. */
+  --wrap-pt: calc(var(--topbar-h) + 14px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 .topbar {
   padding-top: env(safe-area-inset-top, 0px);
-  height: calc(var(--topbar-h) + env(safe-area-inset-top, 0px));
+  height: auto; /* allow the bar to grow to two rows on narrow screens */
 }
 .wrap { padding-top: var(--wrap-pt); }
 canvas { max-height: calc(100dvh - var(--wrap-pt) - 24px - var(--safe-bottom)); }
@@ -361,24 +363,30 @@ canvas { max-height: calc(100dvh - var(--wrap-pt) - 24px - var(--safe-bottom)); 
 
 /* Topbar responsive clean-up to prevent overlap on phones */
 @media (max-width: 540px) {
-  /* Keep only Score in the middle, hide Best chip */
-  .center .chip:nth-child(2) { display: none; }
+  /* Two-row topbar: brand + actions on row 1, chips centered on row 2 */
+  .topbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "left right" "center center";
+    row-gap: 8px;
+    padding: 0 10px;
+  }
+  .topbar .left { grid-area: left; }
+  .topbar .center { grid-area: center; justify-content: center; }
+  .topbar .right { grid-area: right; justify-content: flex-end; gap: 8px; }
   .center .chip { padding: 6px 10px; font-size: 13.5px; }
-  .right { gap: 8px; }
-  .topbar { padding: 0 10px; }
-  /* When the Score chip is visible, hide duplicate corner bubble to free space */
+  /* Avoid duplicate score when center chips show */
   .score-bubble { display: none; }
 }
 
 @media (max-width: 420px) {
-  /* Hide center chips entirely; rely on right score bubble */
-  .center { display: none; }
-  /* Tighten brand and optionally hide text label to fit */
+  /* Keep two-row layout; tighten brand label */
   .brand { padding: 4px 6px; }
   .brand span { display: none; }
   .topbar { gap: 8px; }
   .icon-btn { width: 32px; height: 32px; }
-  .score-bubble { display: inline-block; min-width: 36px; padding: 6px 8px; font-size: 12px; }
+  /* Still prefer center chip; keep bubble hidden to reduce clutter */
+  .score-bubble { display: none; }
   .topbar { padding: 0 8px; }
 }
 
