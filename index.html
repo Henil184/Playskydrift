@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -8,43 +9,563 @@
   <meta name="google-adsense-account" content="ca-pub-9059974437009768">
   <title>Sky Drift – Play Free Online Jump Game | PlaySkyDrift.com</title>
 
-  <!-- Fonts -->
-  <link rel="Aptos" href="https://fonts.googleapis.com">
-  <link rel="Aptos" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Enhanced Font Selection -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="description" content="Play Sky Drift — a fun free jump game! Jump between platforms, climb the night sky, and chase your best score. Play instantly on desktop or mobile.">
+    <meta name="keywords" content="Sky Drift, dooble jumap, play Sky Drift, Best free games, jump game online, fun browser game, play free game, platform jumper, mobile game, playskydrift, sky drift jump game">
+    <meta name="author" content="Henil Patel">
+    <link rel="canonical" href="https://playskydrift.com/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sky Drift — Play Free Online Jump Game">
+    <meta property="og:description" content="Jump between platforms and climb the night sky. Free, no download, works on desktop and mobile.">
+    <meta property="og:url" content="https://playskydrift.com/">
+    <meta property="og:image" content="https://playskydrift.com/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sky Drift — Play Free Online Jump Game">
+  <meta name="twitter:description" content="Fast, free browser jump game. Play instantly on any device.">
+    <meta name="twitter:image" content="https://playskydrift.com/logo.png">
+    <!-- Additional preview images for rich results/social cards -->
+    <meta property="og:image" content="https://playskydrift.com/og/sky-drift-1.jpg">
+    <meta property="og:image" content="https://playskydrift.com/og/sky-drift-2.jpg">
+    <meta property="og:image" content="https://playskydrift.com/og/sky-drift-3.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Sky Drift gameplay screenshot">
+
   
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-
-  <link rel="icon" type="image/png" href="https://playskydrift.com/logo.png">
-<link rel="apple-touch-icon" href="https://playskydrift.com/logo.png">
-<meta name="theme-color" content="#0f2027">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Sky Drift",
-  "url": "https://playskydrift.com/",
-  "logo": "https://playskydrift.com/logo.png"
+  <style>
+:root {
+  --bg-1: #0f2027;
+  --bg-2: #203a43;
+  --bg-3: #2c5364;
+  --platform: #8ee3f5;
+  --platform-alt: #a0f0c2;
+  --fragile: #ff9aa2;
+  --player: #ff7aa8;
+  
+  --primary-color: #9be2f5;
+  --accent-color: #ffde59;
+  --surface: rgba(255,255,255,0.08);
+  --surface-2: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.16);
+  --chip-glow: 0 0 0 1px rgba(255,255,255,0.18), 0 8px 24px rgba(155,226,245,0.18);
+  --btn-glow: 0 8px 20px rgba(0,0,0,0.22);
+  --text: #f3fbff;
+  --shadow: rgba(0,0,0,0.25);
 }
-</script>
 
-<meta name="description" content="Play Sky Drift — a fun free jump game! Jump between platforms, climb the night sky, and chase your best score. Play instantly on desktop or mobile.">
-<meta name="keywords" content="Sky Drift, dooble jumap, play Sky Drift, Best free games, jump game online, fun browser game, play free game, platform jumper, mobile game, playskydrift, sky drift jump game">
-<meta name="author" content="Henil Patel">
-<link rel="canonical" href="https://playskydrift.com/">
-<meta name="robots" content="index, follow">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sky Drift — Play Free Online Jump Game">
-<meta property="og:description" content="Jump between platforms and climb the night sky. Free, no download, works on desktop and mobile.">
-<meta property="og:url" content="https://playskydrift.com/">
-<meta property="og:image" content="https://playskydrift.com/logo.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sky Drift — Play Free Online Jump Game">
-<meta name="twitter:description" content="Fast, free browser jump game. Play instantly on any device.">
-<meta name="twitter:image" content="https://playskydrift.com/logo.png">
+html, body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(160deg, var(--bg-1), var(--bg-2) 50%, var(--bg-3));
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+  position: relative;
+  transition: background 0.8s ease;
+}
 
-  <link rel="stylesheet" href="styles.css">
- 
+body::before {
+  content: "";
+  position: fixed; 
+  inset: -10% -10% 0 -10%; 
+  pointer-events: none; 
+  z-index: 0;
+  background: radial-gradient(1200px 800px at 20% -10%, rgba(255, 222, 89, 0.08), transparent 60%),
+              radial-gradient(900px 600px at 80% -10%, rgba(255, 122, 168, 0.06), transparent 60%);
+  animation: bgShift 24s ease-in-out infinite alternate;
+  opacity: 0.9;
+}
+
+@keyframes bgShift { 
+  to { 
+    transform: translateY(8px) scale(1.02); 
+    filter: hue-rotate(6deg) saturate(1.02); 
+  } 
+}
+
+.wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding-top: 80px;
+  padding-bottom: 24px;
+  box-sizing: border-box;
+}
+
+canvas {
+  width: min(92vw, 480px);
+  height: calc(min(92vw, 480px) * 1.5);
+  max-height: calc(100vh - 120px);
+  image-rendering: pixelated;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border-radius: 16px;
+  box-shadow: 0 24px 60px var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.08);
+  transition: box-shadow .25s ease, transform .25s ease;
+  position: relative;
+  z-index: 1;
+}
+
+canvas:focus { 
+  outline: none; 
+  box-shadow: 0 28px 70px rgba(0,0,0,0.35), 0 0 0 2px rgba(255,255,255,0.12) inset; 
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(6px) saturate(110%);
+  -webkit-backdrop-filter: blur(6px) saturate(110%);
+  background: linear-gradient(160deg, rgba(15,32,39,0.75), rgba(32,58,67,0.75));
+  z-index: 20;
+}
+
+.card {
+  width: min(92vw, 440px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 40px var(--shadow);
+  text-align: center;
+  transition: transform .2s ease, box-shadow .3s ease;
+}
+
+.card:hover { 
+  transform: translateY(-1px); 
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3); 
+}
+
+.title {
+  font-family: 'Fredoka One', 'Poppins', cursive;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin: 8px 0 16px;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.4);
+}
+
+.muted { 
+  opacity: 0.85; 
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.cta {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.primary, .secondary {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: #0d1b22;
+  transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
+}
+
+.primary {
+  background: linear-gradient(180deg, var(--accent-color), #ffbb00);
+  box-shadow: 0 6px 16px rgba(255, 187, 0, 0.35);
+}
+
+.secondary {
+  background: linear-gradient(180deg, var(--primary-color), #5bd1f4);
+  box-shadow: 0 6px 16px rgba(91, 209, 244, 0.35);
+}
+
+.primary:hover, .secondary:hover { 
+  transform: translateY(-2px); 
+  filter: brightness(1.1); 
+}
+
+.primary:active, .secondary:active { 
+  transform: translateY(1px) scale(0.98); 
+}
+
+.controls {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 5;
+  user-select: none;
+}
+
+.ctrl-btn {
+  width: 64px; 
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.12);
+  color: var(--text);
+  display: grid; 
+  place-items: center;
+  font-size: 22px;
+  box-shadow: 0 6px 18px var(--shadow);
+  backdrop-filter: blur(6px);
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.ctrl-btn:active { 
+  transform: translateY(1px) scale(0.98); 
+}
+
+.topbar {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  height: 68px;
+  display: grid; 
+  grid-template-columns: auto 1fr auto; 
+  align-items: center; 
+  gap: 16px;
+  padding: 0 20px; 
+  z-index: 9;
+  background: linear-gradient(180deg, rgba(10,20,30,0.95), rgba(20,35,50,0.85));
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  border-bottom: 2px solid rgba(255,255,255,0.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 -1px 0 rgba(255,255,255,0.1);
+  color: var(--text);
+  user-select: none;
+  transition: background 0.8s ease;
+}
+
+.topbar .left, .topbar .center, .topbar .right { 
+  display: flex; 
+  align-items: center; 
+  min-width: 0; 
+}
+
+.topbar .left { gap: 8px; }
+
+.brand { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px;
+  font-family: 'Fredoka One', 'Poppins', cursive;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: .8px;
+  padding: 10px 18px; 
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  border: 2px solid rgba(255,255,255,0.2);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.15), 0 4px 16px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5), 0 0 20px rgba(155,226,245,0.3);
+  pointer-events: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.brand::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: brandShine 3s infinite;
+}
+
+@keyframes brandShine {
+  0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.center { gap: 10px; }
+
+.chip {
+  background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+  border: 2px solid rgba(255,255,255,0.25);
+  border-radius: 999px; 
+  padding: 10px 20px;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 6px 20px rgba(0,0,0,0.25);
+  font-weight: 900;
+  font-size: 17px;
+  white-space: nowrap;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  position: relative;
+  animation: hudPulse 3.2s ease-in-out infinite;
+}
+
+.chip::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 999px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(155,226,245,0.3), rgba(255,222,89,0.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  animation: chipGlow 3.2s ease-in-out infinite;
+}
+
+@keyframes chipGlow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@keyframes hudPulse { 
+  0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 14px rgba(0,0,0,0.18); } 
+  50% { box-shadow: var(--chip-glow); } 
+}
+
+.right { 
+  justify-content: flex-end; 
+  gap: 10px; 
+}
+
+.icon-btn {
+  width: 44px; 
+  height: 44px; 
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.25);
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  color: var(--text); 
+  display: grid; 
+  place-items: center;
+  cursor: pointer; 
+  pointer-events: auto;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.15), 0 6px 20px rgba(0,0,0,0.3);
+  transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.icon-btn:hover::before {
+  opacity: 1;
+}
+
+.icon-btn:hover { 
+  transform: translateY(-2px);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 8px 28px rgba(0,0,0,0.4); 
+}
+
+.icon-btn:active { 
+  transform: translateY(0) scale(0.95); 
+}
+
+.icon-btn svg { 
+  width: 20px; 
+  height: 20px; 
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.score-bubble {
+  min-width: 50px; 
+  text-align: center; 
+  padding: 10px 16px; 
+  border-radius: 14px; 
+  font-weight: 900;
+  font-size: 18px;
+  background: linear-gradient(135deg, rgba(255,222,89,0.25), rgba(255,122,168,0.25));
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 6px 20px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 10px rgba(255,222,89,0.5);
+  pointer-events: none;
+  animation: scorePulse 2s ease-in-out infinite;
+}
+
+@keyframes scorePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.leaderboard-card { 
+  position: fixed; 
+  top: 72px; 
+  right: 12px; 
+  width: 320px; 
+  max-height: 64vh; 
+  z-index: 12;
+  background: var(--surface); 
+  border: 1px solid var(--border); 
+  border-radius: 14px; 
+  box-shadow: 0 10px 32px var(--shadow); 
+  overflow: hidden;
+  transition: transform .22s ease, opacity .22s ease, visibility 0s linear .22s;
+  opacity: 1; 
+  visibility: visible; 
+  transform: translateY(0) scale(1);
+}
+
+.leaderboard-card.hidden {
+  opacity: 0; 
+  visibility: hidden; 
+  pointer-events: none;
+  transform: translateY(-6px) scale(0.98);
+}
+
+.lb-header { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 12px 14px; 
+  border-bottom: 1px solid var(--border); 
+}
+
+.lb-title { 
+  font-family: 'Fredoka One', 'Poppins', cursive;
+  font-weight: 400; 
+  font-size: 18px;
+  letter-spacing: .3px; 
+}
+
+.lb-actions { 
+  display: flex; 
+  gap: 8px; 
+}
+
+.lb-btn { 
+  width: 28px; 
+  height: 28px; 
+  border-radius: 50%; 
+  border: 1px solid var(--border); 
+  background: var(--surface-2); 
+  color: var(--text); 
+  display: grid; 
+  place-items: center; 
+  cursor: pointer; 
+  transition: transform 120ms ease;
+}
+
+.lb-btn:active {
+  transform: scale(0.95);
+}
+
+.lb-list { 
+  list-style: none; 
+  margin: 0; 
+  padding: 8px 10px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px; 
+}
+
+.lb-row { 
+  display: grid; 
+  grid-template-columns: auto 1fr auto; 
+  gap: 10px; 
+  align-items: center; 
+  padding: 8px 10px; 
+  border-radius: 10px; 
+  border: 1px solid var(--border); 
+  background: var(--surface-2); 
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 6px 18px rgba(0,0,0,0.18); 
+}
+
+.lb-rank { 
+  font-weight: 800; 
+  opacity: .9; 
+}
+
+.lb-id { 
+  font-weight: 700; 
+  letter-spacing: .2px; 
+  opacity: .9; 
+  font-size: 14px;
+}
+
+.lb-score { 
+  font-weight: 900; 
+  padding: 4px 10px; 
+  border-radius: 999px; 
+  background: var(--surface); 
+  border: 1px solid var(--border); 
+}
+
+.lb-footer { 
+  padding: 6px 12px 10px; 
+  font-size: 12px; 
+  opacity: .8; 
+  text-align: center; 
+}
+
+.lb-row.gold { 
+  box-shadow: 0 0 0 1px rgba(255,215,0,0.25), 0 8px 24px rgba(255,215,0,0.18); 
+}
+
+.lb-row.silver { 
+  box-shadow: 0 0 0 1px rgba(192,192,192,0.25), 0 8px 24px rgba(192,192,192,0.18); 
+}
+
+.lb-row.bronze { 
+  box-shadow: 0 0 0 1px rgba(205,127,50,0.25), 0 8px 24px rgba(205,127,50,0.18); 
+}
+
+@media (max-width: 600px) {
+  .leaderboard-card {
+    top: auto; 
+    bottom: 12px; 
+    right: 50%; 
+    transform: translate(50%, 12px);
+    width: min(92vw, 420px); 
+    max-height: 50vh;
+  }
+  .leaderboard-card.hidden { 
+    opacity: 0; 
+    visibility: hidden; 
+    pointer-events: none; 
+    transform: translate(50%, 24px) scale(0.98); 
+  }
+}
+
+@media (max-width: 540px) {
+  .topbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "left right" "center center";
+    row-gap: 8px;
+    padding: 0 10px;
+  }
+  .topbar .left { grid-area: left; }
+  .topbar .center { grid-area: center; justify-content: center; }
+  .topbar .right { grid-area: right; justify-content: flex-end; gap: 8px; }
+  .center .chip { padding: 6px 10px; font-size: 13.5px; }
+  .score-bubble { display: none; }
+}
+
+@media (max-width: 420px) {
+  .brand { padding: 4px 8px; font-size: 16px; }
+  .topbar { gap: 8px; }
+  .icon-btn { width: 32px; height: 32px; }
+  .topbar { padding: 0 8px; }
+}
+  </style>
 </head>
 <body>
   <div class="wrap">
@@ -53,53 +574,42 @@
 
   <header class="topbar">
     <div class="left">
-      <div class="brand"><img class="brand-logo" src="logo.png" alt="Sky Drift logo"><span>Sky Drift</span></div>
+      <div class="brand"><span id="themeEmoji">🌙</span> <span style="position: relative; z-index: 1;">Sky Drift</span></div>
     </div>
     <div class="center">
-      <div class="chip">Score: <span id="score2">0</span></div>
-      <div class="chip">Best: <span id="best2">0</span></div>
+      <div class="chip">🎯 <span id="score2">0</span></div>
+      <div class="chip">👑 <span id="best2">0</span></div>
     </div>
     <div class="right">
       <button class="icon-btn" id="pauseBtn2" title="Pause/Resume">⏯</button>
       <button class="icon-btn" id="restartBtn2" title="Restart">↻</button>
       <button class="icon-btn" id="lbToggle" title="Leaderboard">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
           <path d="M4 14h4v6H4zM10 10h4v10h-4zM16 6h4v14h-4z" fill="currentColor"/>
         </svg>
       </button>
-      <div class="score-bubble"><span id="scoreCorner2">0</span></div>
+      <div class="score-bubble">⚡ <span id="scoreCorner2">0</span></div>
     </div>
   </header>
 
-  <div class="hud">
-    <div class="badge">Score: <span id="score">0</span></div>
-    <div class="badge">Best: <span id="best">0</span></div>
-    <div class="badge btn" id="pauseBtn" title="Pause/Resume">⏯</div>
-    <div class="badge btn" id="restartBtn" title="Restart">↻</div>
-  </div>
-
-  <div class="game-title">Sky Drift</div>
-
-  <div class="corner-score"><span id="scoreCorner">0</span></div>
-
   <div class="overlay" id="startOverlay">
     <div class="card">
-      <div style="font-size: 42px">🌙</div>
+      <div style="font-size: 52px">🎮</div>
       <div class="title">Sky Drift</div>
-      <div class="muted">Jump from platform to platform, climb the night sky, and chase your best score. Keyboard or touch controls.</div>
+      <div class="muted">Jump from platform to platform and climb higher! Themes change every 1000 points. Use keyboard or touch controls.</div>
       <div class="cta">
         <button class="primary" id="startBtn">Start Game</button>
         <button class="secondary" id="muteBtn">Sound: Off</button>
       </div>
-      <div class="muted" style="margin-top:10px; font-size: 12px;">Tip: Wrap around the sides. Land only while falling.</div>
+      <div class="muted" style="margin-top:12px; font-size: 13px;">💡 Tip: Wrap around the sides. Land only while falling!</div>
     </div>
   </div>
 
   <div class="overlay" id="gameOver" style="display:none;">
     <div class="card">
-      <div style="font-size: 42px">⭐</div>
-      <div class="title">Game Over</div>
-      <div class="muted">Score: <span id="finalScore">0</span> · Best: <span id="finalBest">0</span></div>
+      <div style="font-size: 52px">🏆</div>
+      <div class="title">Game Over!</div>
+      <div class="muted" style="font-size: 16px; font-weight: 700; margin: 10px 0;">Score: <span id="finalScore">0</span> · Best: <span id="finalBest">0</span></div>
       <div class="cta">
         <button class="primary" id="againBtn">Play Again</button>
         <button class="secondary" id="homeBtn">Home</button>
@@ -112,7 +622,6 @@
     <div class="ctrl-btn" id="rightBtn">▶</div>
   </div>
 
-  <!-- Leaderboard card -->
   <aside id="leaderboard" class="leaderboard-card hidden" aria-label="Top Scores">
     <div class="lb-header">
       <div class="lb-title">Top Scores</div>
@@ -135,6 +644,7 @@
       const scoreEl = document.getElementById('score2');
       const bestEl = document.getElementById('best2');
       const scoreCornerEl = document.getElementById('scoreCorner2');
+      const themeEmojiEl = document.getElementById('themeEmoji');
       const startOverlay = document.getElementById('startOverlay');
       const gameOverOverlay = document.getElementById('gameOver');
       const finalScoreEl = document.getElementById('finalScore');
@@ -145,22 +655,72 @@
       const homeBtn = document.getElementById('homeBtn');
       const pauseBtn = document.getElementById('pauseBtn2');
       const restartBtn = document.getElementById('restartBtn2');
-      // Ensure crisp vector icons regardless of encoding
+      
       if (pauseBtn) pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg>';
       if (restartBtn) restartBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5a7 7 0 1 1-6.3 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M6 3v6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      
       const touchControls = document.getElementById('touchControls');
       const leftBtn = document.getElementById('leftBtn');
       const rightBtn = document.getElementById('rightBtn');
 
-      // Leaderboard DOM refs
       const lbToggle = document.getElementById('lbToggle');
       const lbCard = document.getElementById('leaderboard');
       const lbList = document.getElementById('leaderboardList');
       const lbClose = document.getElementById('lbClose');
       const lbReset = document.getElementById('lbReset');
 
-      // Leaderboard store
-      const LB_KEY = 'skydrift-leaderboard'; // [{id, score, ts}]
+      // Theme configurations - Changes every 1000 points
+      const themes = [
+        {
+          name: 'Night Sky',
+          emoji: '🌙',
+          bg1: '#0f2027', bg2: '#203a43', bg3: '#2c5364',
+          platform: '#8ee3f5', platformAlt: '#a0f0c2', fragile: '#ff9aa2', player: '#ff7aa8'
+        },
+        {
+          name: 'Sunset Valley',
+          emoji: '🌅',
+          bg1: '#2c1a4d', bg2: '#8b4367', bg3: '#ff6b6b',
+          platform: '#ffd93d', platformAlt: '#ffb347', fragile: '#ff6b9d', player: '#a78bfa'
+        },
+        {
+          name: 'Ocean Deep',
+          emoji: '🌊',
+          bg1: '#0a2342', bg2: '#2d4263', bg3: '#457b9d',
+          platform: '#4ecdc4', platformAlt: '#44cfcb', fragile: '#f38181', player: '#95e1d3'
+        },
+        {
+          name: 'Forest Green',
+          emoji: '🌲',
+          bg1: '#1a3a2e', bg2: '#2d5d4f', bg3: '#4a7c6f',
+          platform: '#a8e6cf', platformAlt: '#c1f0d5', fragile: '#ff8b94', player: '#dcedc1'
+        },
+        {
+          name: 'Cyber Neon',
+          emoji: '🎆',
+          bg1: '#1a0033', bg2: '#2d0052', bg3: '#4a0080',
+          platform: '#00ff9f', platformAlt: '#00d9ff', fragile: '#ff0080', player: '#ff00ff'
+        }
+      ];
+
+      let currentTheme = 0;
+      let lastThemeScore = 0;
+
+      function applyTheme(themeIndex) {
+        const theme = themes[themeIndex % themes.length];
+        const root = document.documentElement;
+        root.style.setProperty('--bg-1', theme.bg1);
+        root.style.setProperty('--bg-2', theme.bg2);
+        root.style.setProperty('--bg-3', theme.bg3);
+        root.style.setProperty('--platform', theme.platform);
+        root.style.setProperty('--platform-alt', theme.platformAlt);
+        root.style.setProperty('--fragile', theme.fragile);
+        root.style.setProperty('--player', theme.player);
+        
+        if (themeEmojiEl) themeEmojiEl.textContent = theme.emoji;
+      }
+
+      const LB_KEY = 'skydrift-leaderboard';
       const LB_MAX = 10;
       const genRunId = () => Math.floor(100000 + Math.random() * 900000);
       const loadLB = () => { try { return JSON.parse(localStorage.getItem(LB_KEY) || '[]'); } catch { return []; } };
@@ -175,6 +735,7 @@
         saveLB(trimmed);
         return trimmed;
       };
+      
       function renderLeaderboard() {
         if (!lbList) return;
         const lb = loadLB();
@@ -186,6 +747,7 @@
           lbList.appendChild(li);
         });
       }
+      
       function bindLeaderboardUI(){
         const toggle = lbToggle; const card = lbCard; const closeBtn = lbClose; const resetBtn = lbReset;
         const hide = ()=> card && card.classList.add('hidden');
@@ -194,79 +756,120 @@
         if (closeBtn) closeBtn.addEventListener('click', hide);
         if (resetBtn) resetBtn.addEventListener('click', ()=>{ localStorage.removeItem(LB_KEY); renderLeaderboard(); });
         renderLeaderboard();
-        // Ensure it starts closed on load (desktop + mobile)
         hide();
       }
 
-      // Sound (minimal pop). Off by default for calm UX
       let soundOn = false;
-      function popSound() {
+      
+      function playJumpSound() {
         if (!soundOn) return;
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.type = 'triangle';
-        o.frequency.value = 600;
-        o.connect(g); g.connect(ctx.destination);
-        g.gain.setValueAtTime(0.15, ctx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.08);
-        o.start(); o.stop(ctx.currentTime + 0.08);
+        try {
+          const actx = new (window.AudioContext || window.webkitAudioContext)();
+          const o = actx.createOscillator();
+          const g = actx.createGain();
+          o.type = 'sine';
+          o.frequency.setValueAtTime(400, actx.currentTime);
+          o.frequency.exponentialRampToValueAtTime(600, actx.currentTime + 0.1);
+          o.connect(g); 
+          g.connect(actx.destination);
+          g.gain.setValueAtTime(0.2, actx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + 0.15);
+          o.start(); 
+          o.stop(actx.currentTime + 0.15);
+        } catch(e) {}
       }
 
-      // Game state
+      function playJetSound() {
+        if (!soundOn) return;
+        try {
+          const actx = new (window.AudioContext || window.webkitAudioContext)();
+          const o = actx.createOscillator();
+          const g = actx.createGain();
+          o.type = 'sawtooth';
+          o.frequency.setValueAtTime(150, actx.currentTime);
+          o.frequency.exponentialRampToValueAtTime(200, actx.currentTime + 0.3);
+          o.connect(g); 
+          g.connect(actx.destination);
+          g.gain.setValueAtTime(0.15, actx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + 0.3);
+          o.start(); 
+          o.stop(actx.currentTime + 0.3);
+        } catch(e) {}
+      }
+
+      function playFanSound() {
+        if (!soundOn) return;
+        try {
+          const actx = new (window.AudioContext || window.webkitAudioContext)();
+          const o = actx.createOscillator();
+          const g = actx.createGain();
+          o.type = 'triangle';
+          o.frequency.setValueAtTime(800, actx.currentTime);
+          o.frequency.exponentialRampToValueAtTime(1200, actx.currentTime + 0.2);
+          o.connect(g); 
+          g.connect(actx.destination);
+          g.gain.setValueAtTime(0.18, actx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + 0.2);
+          o.start(); 
+          o.stop(actx.currentTime + 0.2);
+        } catch(e) {}
+      }
+
+      function popSound() {
+        playJumpSound();
+      }
+
       let running = false;
       let paused = false;
       let gameOver = false;
       let score = 0;
       let best = 0;
+      
       try {
         best = Number(localStorage.getItem('jump-best') || 0);
       } catch (e) {
-        best = 0; // storage unavailable (e.g., private mode)
+        best = 0;
       }
       bestEl.textContent = best;
 
-      // Physics
       const gravity = 0.35;
       const jumpV = -10.5;
       const moveAccel = 0.45;
       const friction = 0.985;
       const maxVX = 4.2;
 
-      // Player
-      const player = { x: W/2, y: H-80, vx: 0, vy: -8, w: 34, h: 34, dir: 1, boost: null };
+      const player = { x: W/2, y: H-80, vx: 0, vy: -8, w: 40, h: 40, dir: 1, boost: null };
 
-      // Platforms
       const platforms = [];
-      // Items (power-ups not attached to platform)
       const items = [];
       const PLATFORM_TYPES = { NORMAL: 0, MOVING: 1, FRAGILE: 2 };
       const PLATFORM_COLORS = {
-        [PLATFORM_TYPES.NORMAL]: getCssVar('--platform'),
-        [PLATFORM_TYPES.MOVING]: getCssVar('--platform-alt'),
-        [PLATFORM_TYPES.FRAGILE]: getCssVar('--fragile')
+        [PLATFORM_TYPES.NORMAL]: '#8ee3f5',
+        [PLATFORM_TYPES.MOVING]: '#a0f0c2',
+        [PLATFORM_TYPES.FRAGILE]: '#ff9aa2'
       };
 
       function getCssVar(name) {
         return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
       }
 
-      // Input
       const keys = { left: false, right: false };
+      
       window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') keys.left = true;
         if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') keys.right = true;
         if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
           if (!running) startGame();
           else if (!gameOver) togglePause();
         }
       });
+      
       window.addEventListener('keyup', (e) => {
         if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') keys.left = false;
         if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') keys.right = false;
       });
 
-      // Touch controls display for narrow screens
       function updateTouchVisibility() {
         const isNarrow = window.innerWidth < 640;
         touchControls.style.display = isNarrow ? 'flex' : 'none';
@@ -274,16 +877,14 @@
       window.addEventListener('resize', updateTouchVisibility);
       updateTouchVisibility();
 
-      // Touch controls behavior
       const press = (key, on) => () => { keys[key] = on; };
-      leftBtn.addEventListener('touchstart', press('left', true));
-      leftBtn.addEventListener('touchend', press('left', false));
-      leftBtn.addEventListener('touchcancel', press('left', false));
-      rightBtn.addEventListener('touchstart', press('right', true));
-      rightBtn.addEventListener('touchend', press('right', false));
-      rightBtn.addEventListener('touchcancel', press('right', false));
+      leftBtn.addEventListener('touchstart', press('left', true), {passive: true});
+      leftBtn.addEventListener('touchend', press('left', false), {passive: true});
+      leftBtn.addEventListener('touchcancel', press('left', false), {passive: true});
+      rightBtn.addEventListener('touchstart', press('right', true), {passive: true});
+      rightBtn.addEventListener('touchend', press('right', false), {passive: true});
+      rightBtn.addEventListener('touchcancel', press('right', false), {passive: true});
 
-      // Also allow touching anywhere on the canvas (left/right halves) to move
       function updateKeysFromTouches(touches) {
         const rect = canvas.getBoundingClientRect();
         let leftActive = false;
@@ -291,18 +892,19 @@
         for (let i = 0; i < touches.length; i++) {
           const t = touches[i];
           const x = t.clientX - rect.left;
-          if (x < rect.width / 2) leftActive = true; else rightActive = true;
+          if (x < rect.width / 2) leftActive = true; 
+          else rightActive = true;
         }
         keys.left = leftActive;
         keys.right = rightActive;
       }
+      
       const touchOpts = { passive: false };
       canvas.addEventListener('touchstart', (e) => { updateKeysFromTouches(e.touches); e.preventDefault(); }, touchOpts);
       canvas.addEventListener('touchmove',  (e) => { updateKeysFromTouches(e.touches); e.preventDefault(); }, touchOpts);
       canvas.addEventListener('touchend',   (e) => { updateKeysFromTouches(e.touches); e.preventDefault(); }, touchOpts);
       canvas.addEventListener('touchcancel',(e) => { updateKeysFromTouches(e.touches); e.preventDefault(); }, touchOpts);
 
-      // UI buttons
       startBtn.addEventListener('click', () => startGame());
       againBtn.addEventListener('click', () => startGame());
       homeBtn.addEventListener('click', () => showStart());
@@ -312,10 +914,9 @@
         soundOn = !soundOn;
         muteBtn.textContent = `Sound: ${soundOn ? 'On' : 'Off'}`;
       });
-      // Leaderboard UI
+
       bindLeaderboardUI();
 
-      // Starfield for ambience
       const stars = [...Array(60)].map(() => ({
         x: Math.random()*W,
         y: Math.random()*H,
@@ -326,42 +927,53 @@
 
       function reset() {
         score = 0;
+        lastThemeScore = 0;
+        currentTheme = 0;
+        applyTheme(0);
         scoreEl.textContent = '0';
         scoreCornerEl.textContent = '0';
         gameOver = false;
         paused = false;
-        player.x = W/2; player.y = H - 80; player.vx = 0; player.vy = -10; player.dir = 1; player.boost = null;
+        player.x = W/2; 
+        player.y = H - 80; 
+        player.vx = 0; 
+        player.vy = -10; 
+        player.dir = 1; 
+        player.boost = null;
         platforms.length = 0;
         items.length = 0;
-        // Seed initial platforms
+        
         const step = 62;
         let y = H - 20;
         for (let i = 0; i < 12; i++) {
           addPlatform(Math.random()*(W-68)+34, y);
           y -= step;
         }
-        // Ground safety platform
         platforms.push({ x: W/2 - 40, y: H - 12, w: 80, h: 10, type: PLATFORM_TYPES.NORMAL, vx: 0, broken: false });
       }
 
       function addPlatform(x, y) {
         const r = Math.random();
         let type = PLATFORM_TYPES.NORMAL;
-        if (r > 0.82) type = PLATFORM_TYPES.MOVING; // ~18%
-        else if (r < 0.07) type = PLATFORM_TYPES.FRAGILE; // ~7%
-        const p = { x, y, w: 68, h: 12, type, vx: (type===1? (Math.random()<0.5? -0.8:0.8):0), broken: false, spring: null };
-        // Chance to add a spring on normal platforms
+        if (r > 0.82) type = PLATFORM_TYPES.MOVING;
+        else if (r < 0.07) type = PLATFORM_TYPES.FRAGILE;
+        
+        const p = { 
+          x, y, w: 68, h: 12, type, 
+          vx: (type===1? (Math.random()<0.5? -0.8:0.8):0), 
+          broken: false, spring: null 
+        };
+        
         if (type === PLATFORM_TYPES.NORMAL && Math.random() < 0.14) {
-          // Spring roughly centered
           p.spring = { offsetX: Math.random() * (p.w - 20) + 10, used: false, comp: 0 };
         }
         platforms.push(p);
-        // Chance to spawn jetpack or fan above some platforms
+        
         const roll = Math.random();
-        if (roll > 0.97) { // ~3% jetpack
-          items.push({ type: 'JET', x: p.x + p.w/2 - 8, y: p.y - 18, w: 16, h: 14, taken: false, t: 0 });
-        } else if (roll > 0.94) { // ~3% fan (propeller hat)
-          items.push({ type: 'FAN', x: p.x + p.w/2 - 8, y: p.y - 18, w: 16, h: 12, taken: false, t: 0 });
+        if (roll > 0.97) {
+          items.push({ type: 'JET', x: p.x + p.w/2 - 10, y: p.y - 22, w: 20, h: 18, taken: false, t: 0 });
+        } else if (roll > 0.94) {
+          items.push({ type: 'FAN', x: p.x + p.w/2 - 10, y: p.y - 20, w: 20, h: 16, taken: false, t: 0 });
         }
       }
 
@@ -372,7 +984,7 @@
         gameOverOverlay.style.display = 'none';
         if (lbCard) lbCard.classList.add('hidden');
         lastTime = performance.now();
-        loop();
+        requestAnimationFrame(loop);
       }
 
       function showStart() {
@@ -389,7 +1001,6 @@
         gameOver = true;
         finalScoreEl.textContent = Math.floor(score);
         finalBestEl.textContent = best;
-        // record score and refresh leaderboard
         recordScore(Math.floor(score));
         renderLeaderboard();
         if (lbCard) lbCard.classList.add('hidden');
@@ -401,11 +1012,10 @@
         paused = !paused;
       }
 
-      // Core loop
       let lastTime = 0;
       function loop(ts) {
         if (!running) return;
-        const dt = Math.min(32, ts - lastTime || 16) / 16.6667; // normalize to ~60fps units
+        const dt = Math.min(32, ts - lastTime || 16) / 16.6667;
         lastTime = ts;
         if (!paused) update(dt);
         draw();
@@ -413,57 +1023,54 @@
       }
 
       function update(dt) {
-        // Player input
+        // Check for theme change every 1000 points
+        const newThemeIndex = Math.floor(score / 1000);
+        if (newThemeIndex !== currentTheme && newThemeIndex < themes.length * 10) {
+          currentTheme = newThemeIndex;
+          applyTheme(newThemeIndex);
+        }
+
         if (keys.left)  { player.vx -= moveAccel * dt; player.dir = -1; }
         if (keys.right) { player.vx += moveAccel * dt; player.dir =  1; }
         player.vx *= friction;
         player.vx = Math.max(-maxVX, Math.min(maxVX, player.vx));
 
-        // Apply gravity unless strong boost locks vertical speed
         player.vy += gravity * dt;
 
-        // Active boosts
         if (player.boost) {
           const ms = dt * 16.6667;
           player.boost.t -= ms;
           if (player.boost.type === 'JET') {
-            // Strong sustained upward push
             player.vy = Math.min(player.vy, -12.5);
           } else if (player.boost.type === 'FAN') {
-            // Moderate push
             player.vy = Math.min(player.vy, -9.5);
           }
           if (player.boost.t <= 0) player.boost = null;
         }
-        player.x += player.vx * dt * 60/60; // normalized
-        player.y += player.vy * dt * 60/60;
+        
+        player.x += player.vx * dt;
+        player.y += player.vy * dt;
 
-        // Wrap horizontally
         if (player.x < -player.w/2) player.x = W + player.w/2;
         if (player.x > W + player.w/2) player.x = -player.w/2;
 
-        // Platforms update
         for (const p of platforms) {
           if (p.type === PLATFORM_TYPES.MOVING) {
-            p.x += p.vx * dt * 60/60;
+            p.x += p.vx * dt;
             if (p.x < 10 || p.x + p.w > W - 10) p.vx *= -1;
           }
-          // Spring relax animation
           if (p.spring && p.spring.used && p.spring.comp < 1) {
-            p.spring.comp = Math.min(1, p.spring.comp + 0.08 * dt * 60/60);
+            p.spring.comp = Math.min(1, p.spring.comp + 0.08 * dt);
           }
         }
 
-        // Collision (only when falling)
         if (player.vy > 0) {
           for (const p of platforms) {
             if (p.broken) continue;
             const withinX = player.x + player.w*0.6 > p.x && player.x + player.w*0.4 < p.x + p.w;
             const withinY = player.y + player.h >= p.y && player.y + player.h <= p.y + p.h + player.vy + 2;
             if (withinX && withinY) {
-              // bounce
               let bounce = jumpV;
-              // Spring super-bounce
               if (p.spring && !p.spring.used) {
                 p.spring.used = true;
                 bounce = -16.5;
@@ -477,7 +1084,6 @@
           }
         }
 
-        // Item pickups (JET / FAN)
         for (const it of items) {
           if (it.taken) continue;
           const a = { x: player.x, y: player.y, w: player.w, h: player.h };
@@ -485,16 +1091,16 @@
           const hit = a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
           if (hit) {
             if (it.type === 'JET') {
-              player.boost = { type: 'JET', t: 2200 };
+              player.boost = { type: 'JET', t: 5500 };
+              playJetSound();
             } else if (it.type === 'FAN') {
-              player.boost = { type: 'FAN', t: 1200 };
+              player.boost = { type: 'FAN', t: 1800 };
+              playFanSound();
             }
             it.taken = true;
-            popSound();
           }
         }
 
-        // Scroll world up when player climbs
         const topZone = H * 0.4;
         if (player.y < topZone) {
           const dy = (topZone - player.y);
@@ -502,33 +1108,31 @@
           score += dy * 0.15;
           scoreEl.textContent = Math.floor(score);
           scoreCornerEl.textContent = scoreEl.textContent;
+          
           for (const p of platforms) p.y += dy;
-          for (const s of stars) s.y += dy * 0.2; // gentle parallax
+          for (const s of stars) s.y += dy * 0.2;
           for (const it of items) it.y += dy;
 
-          // Recycle platforms that moved off-screen
           while (platforms.length && platforms[0].y > H + 40) {
             platforms.shift();
           }
-          // Remove items off-screen
+          
           for (let i = items.length - 1; i >= 0; i--) {
             if (items[i].y > H + 40 || items[i].taken) items.splice(i,1);
           }
-          // Add new platforms at top
+          
           const highestY = Math.min(...platforms.map(p => p.y));
           while (platforms.length < 14) {
             addPlatform(Math.random()*(W-68)+34, highestY - (Math.random()*42 + 50));
           }
         }
 
-        // Remove broken fragile platforms slowly
         for (let i = platforms.length - 1; i >= 0; i--) {
           const p = platforms[i];
-          if (p.broken) p.h -= 0.9 * dt * 60/60;
+          if (p.broken) p.h -= 0.9 * dt;
           if (p.broken && p.h < 2) platforms.splice(i,1);
         }
 
-        // Death condition
         if (player.y > H + 60) {
           if (score > best) {
             best = Math.floor(score);
@@ -551,10 +1155,8 @@
       }
 
       function draw() {
-        // Clear
         ctx.clearRect(0, 0, W, H);
 
-        // Stars
         ctx.save();
         for (const s of stars) {
           ctx.globalAlpha = s.a;
@@ -565,38 +1167,40 @@
         }
         ctx.restore();
 
-        // Platforms
         for (const p of platforms) {
-          const color = PLATFORM_COLORS[p.type];
+          const color = getCssVar('--platform');
+          const colorAlt = getCssVar('--platform-alt');
+          const colorFragile = getCssVar('--fragile');
+          let pColor = color;
+          if (p.type === PLATFORM_TYPES.MOVING) pColor = colorAlt;
+          if (p.type === PLATFORM_TYPES.FRAGILE) pColor = colorFragile;
+          
           const y = p.y;
           ctx.save();
-          // Shadow
           ctx.globalAlpha = 0.25;
           drawRoundedRect(p.x+2, y+4, p.w, p.h, 6);
           ctx.fillStyle = 'rgba(0,0,0,0.3)';
           ctx.fill();
           ctx.globalAlpha = 1;
-          // Body
+          
           drawRoundedRect(p.x, y, p.w, p.h, 6);
           const grad = ctx.createLinearGradient(p.x, y, p.x, y+p.h);
-          grad.addColorStop(0, color);
-          grad.addColorStop(1, shade(color, -10));
+          grad.addColorStop(0, pColor);
+          grad.addColorStop(1, shade(pColor, -10));
           ctx.fillStyle = grad;
           ctx.fill();
-          // Top highlight
+          
           ctx.fillStyle = 'rgba(255,255,255,0.25)';
           drawRoundedRect(p.x+2, y+1, p.w-4, 3, 3);
           ctx.fill();
-          // Spring
+          
           if (p.spring && p.spring.comp < 1) {
             const sx = p.x + p.spring.offsetX - 8;
-            const sy = y - 10 + p.spring.comp * 6; // compress
+            const sy = y - 10 + p.spring.comp * 6;
             const sh = 10 - p.spring.comp * 6;
-            // spring base
             ctx.fillStyle = '#d7e6ff';
             drawRoundedRect(sx, sy, 16, sh, 3);
             ctx.fill();
-            // coil line
             ctx.strokeStyle = 'rgba(0,0,0,0.35)';
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -604,11 +1208,12 @@
             ctx.lineTo(sx+14, sy+sh-2);
             ctx.stroke();
           }
+          
           if (p.type === PLATFORM_TYPES.MOVING) {
-            // indicator dots
             ctx.fillStyle = 'rgba(0,0,0,0.25)';
             for (let i=0;i<3;i++) ctx.fillRect(p.x + 10 + i*16, y + p.h/2 - 1, 4, 2);
           }
+          
           if (p.type === PLATFORM_TYPES.FRAGILE) {
             ctx.strokeStyle = 'rgba(0,0,0,0.35)';
             ctx.lineWidth = 1;
@@ -622,53 +1227,114 @@
           ctx.restore();
         }
 
-        // Items (power-ups)
         for (const it of items) {
           if (it.taken) continue;
           if (it.type === 'JET') {
-            // small jetpack canister
+            // Jetpack with realistic design
             ctx.save();
-            ctx.fillStyle = '#ffd86f';
-            drawRoundedRect(it.x, it.y, it.w, it.h, 3);
+            
+            // Main body
+            ctx.fillStyle = '#2c3e50';
+            drawRoundedRect(it.x + 2, it.y + 2, it.w - 4, it.h - 4, 4);
             ctx.fill();
-            ctx.fillStyle = '#b38b00';
-            ctx.fillRect(it.x+3, it.y+2, it.w-6, 3);
+            
+            // Fuel tanks (left and right)
+            const tankGrad = ctx.createLinearGradient(it.x, it.y, it.x, it.y + it.h);
+            tankGrad.addColorStop(0, '#e74c3c');
+            tankGrad.addColorStop(1, '#c0392b');
+            ctx.fillStyle = tankGrad;
+            drawRoundedRect(it.x, it.y + 4, 6, it.h - 8, 3);
+            ctx.fill();
+            drawRoundedRect(it.x + it.w - 6, it.y + 4, 6, it.h - 8, 3);
+            ctx.fill();
+            
+            // Center stripe
+            ctx.fillStyle = '#f39c12';
+            ctx.fillRect(it.x + it.w/2 - 1, it.y + 2, 2, it.h - 4);
+            
+            // Shine effect
+            ctx.fillStyle = 'rgba(255,255,255,0.4)';
+            drawRoundedRect(it.x + 3, it.y + 3, 3, it.h/2, 2);
+            ctx.fill();
+            
+            // Nozzles at bottom
+            ctx.fillStyle = '#34495e';
+            ctx.fillRect(it.x + 1, it.y + it.h - 2, 4, 2);
+            ctx.fillRect(it.x + it.w - 5, it.y + it.h - 2, 4, 2);
+            
             ctx.restore();
           } else if (it.type === 'FAN') {
-            // propeller hat pickup
+            // Propeller hat with animation
             ctx.save();
-            ctx.fillStyle = '#8ee3f5';
-            drawRoundedRect(it.x, it.y+4, it.w, 6, 3); // cap
+            const time = performance.now() * 0.01;
+            
+            // Hat base
+            const hatGrad = ctx.createLinearGradient(it.x, it.y + 8, it.x, it.y + it.h);
+            hatGrad.addColorStop(0, '#3498db');
+            hatGrad.addColorStop(1, '#2980b9');
+            ctx.fillStyle = hatGrad;
+            drawRoundedRect(it.x + 2, it.y + 8, it.w - 4, 8, 4);
             ctx.fill();
-            ctx.strokeStyle = '#ff7aa8';
+            
+            // Hat rim
+            ctx.fillStyle = '#2c3e50';
+            drawRoundedRect(it.x, it.y + 14, it.w, 3, 2);
+            ctx.fill();
+            
+            // Propeller center
+            ctx.fillStyle = '#e74c3c';
             ctx.beginPath();
-            ctx.moveTo(it.x+2, it.y+4);
-            ctx.lineTo(it.x+it.w-2, it.y+4);
+            ctx.arc(it.x + it.w/2, it.y + 4, 3, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Animated propeller blades
+            ctx.strokeStyle = '#f39c12';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            const cx = it.x + it.w/2;
+            const cy = it.y + 4;
+            const bladeLength = 8;
+            
+            // Blade 1
+            const angle1 = time;
+            ctx.beginPath();
+            ctx.moveTo(cx - Math.cos(angle1) * bladeLength, cy - Math.sin(angle1) * bladeLength);
+            ctx.lineTo(cx + Math.cos(angle1) * bladeLength, cy + Math.sin(angle1) * bladeLength);
             ctx.stroke();
+            
+            // Blade 2 (perpendicular)
+            const angle2 = time + Math.PI/2;
+            ctx.beginPath();
+            ctx.moveTo(cx - Math.cos(angle2) * bladeLength, cy - Math.sin(angle2) * bladeLength);
+            ctx.lineTo(cx + Math.cos(angle2) * bladeLength, cy + Math.sin(angle2) * bladeLength);
+            ctx.stroke();
+            
             ctx.restore();
           }
         }
 
-        // Player (cute blob)
-        const px = player.x; const py = player.y; const w = player.w; const h = player.h;
+        const px = player.x; 
+        const py = player.y; 
+        const w = player.w; 
+        const h = player.h;
         ctx.save();
-        // Shadow
+        
         ctx.globalAlpha = 0.25;
         ctx.beginPath();
         ctx.ellipse(px + w/2, py + h, w*0.6, 6, 0, 0, Math.PI*2);
         ctx.fillStyle = 'rgba(0,0,0,0.35)';
         ctx.fill();
         ctx.globalAlpha = 1;
-        // Body
+        
         drawRoundedRect(px, py, w, h, 10);
+        const playerColor = getCssVar('--player');
         const bodyGrad = ctx.createLinearGradient(px, py, px, py+h);
-        bodyGrad.addColorStop(0, getCssVar('--player'));
-        bodyGrad.addColorStop(1, shade(getCssVar('--player'), -12));
+        bodyGrad.addColorStop(0, playerColor);
+        bodyGrad.addColorStop(1, shade(playerColor, -12));
         ctx.fillStyle = bodyGrad;
         ctx.fill();
-        // Boost visuals
+        
         if (player.boost && player.boost.type === 'JET') {
-          // flame under player
           ctx.save();
           const flameX = px + w/2 - 3;
           const flameY = py + h;
@@ -680,14 +1346,14 @@
           ctx.fill();
           ctx.restore();
         }
-        // Eyes
+        
         ctx.fillStyle = '#0b1321';
         ctx.beginPath();
         const eyeOffset = player.dir * 2;
         ctx.arc(px + w*0.35 + eyeOffset, py + h*0.42, 3, 0, Math.PI*2);
         ctx.arc(px + w*0.65 + eyeOffset, py + h*0.42, 3, 0, Math.PI*2);
         ctx.fill();
-        // Cheeks
+        
         ctx.globalAlpha = 0.6;
         ctx.fillStyle = 'rgba(255,122,168,0.5)';
         ctx.beginPath();
@@ -695,32 +1361,29 @@
         ctx.arc(px + w*0.75 + eyeOffset, py + h*0.6, 2.5, 0, Math.PI*2);
         ctx.fill();
         ctx.globalAlpha = 1;
-        // Hat / propeller when FAN active
+        
         if (player.boost && player.boost.type === 'FAN') {
           ctx.save();
           ctx.fillStyle = '#9be2f5';
           drawRoundedRect(px + 6, py - 6, w - 12, 6, 3);
           ctx.fill();
-          // spinning propeller
           ctx.strokeStyle = '#ffde59';
           ctx.lineWidth = 2;
           ctx.beginPath();
-          const cx = px + w/2; const cy = py - 6;
-          const t = performance.now() * 0.02;
+          const cx = px + w/2; 
+          const cy = py - 6;
           const r = 8;
           ctx.moveTo(cx - r, cy);
           ctx.lineTo(cx + r, cy);
           ctx.stroke();
           ctx.restore();
         } else {
-          // Default headband
           ctx.fillStyle = '#ffde59';
           drawRoundedRect(px + 6, py - 6, w - 12, 6, 3);
           ctx.fill();
         }
         ctx.restore();
 
-        // UI pause indicator
         if (paused && !gameOver) {
           ctx.fillStyle = 'rgba(0,0,0,0.35)';
           ctx.fillRect(W/2-18, 30, 8, 20);
@@ -740,14 +1403,12 @@
         return `#${(b | (g << 8) | (r << 16)).toString(16).padStart(6,'0')}`;
       }
 
-      // Initialize to home screen
       showStart();
-      // Focus canvas for keyboard on click
       canvas.addEventListener('click', () => { if (!running) startGame(); });
     })();
   </script>
-  
-  <!-- Content below the game: high-quality guide and FAQ -->
+
+ <!-- Content below the game: high-quality guide and FAQ -->
   <main id="content" role="main">
     <h1>Sky Drift – Guide, Tips, and Troubleshooting</h1>
     <p>
@@ -849,7 +1510,6 @@
       <a href="terms.html">Terms</a>
     </p>
   </footer>
- 
-  
+
 </body>
 </html>
